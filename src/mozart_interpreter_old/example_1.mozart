@@ -1,0 +1,25 @@
+{
+    integer a = 0;
+    boolean id = (( 3 % 3 ) == 1);
+    id = True;
+    harmonic_field campo = [(1, 2, 3), (2, 3, 4)];
+    note sol = (1.0, 1.0, G5);
+    music mus = ([], 128.0);
+    register(mus);
+    if((1 == 1)) {
+        a = 1;
+        if((a < 4)) {
+            a = 3;
+        } else {
+            a = 7;
+        }
+    } else {
+        a = 2;
+    }
+
+    while((a < 20)) {
+        a = a + 1;
+    }
+
+    chord b = get(campo, 0);
+}
