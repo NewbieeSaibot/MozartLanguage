@@ -565,7 +565,7 @@ def p_arithmetic_literal(p):
 # Productions
 parser = yacc.yacc()
 
-fp = open("example_1.mozart", "r", encoding="utf-8")
+fp = open("../../data/mozart_code_examples/example_1.mozart", "r", encoding="utf-8")
 code_lines = fp.readlines()
 
 stack = ["OPEN_SCOPE"]

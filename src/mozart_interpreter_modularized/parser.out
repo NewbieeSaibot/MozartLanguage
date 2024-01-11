@@ -1,0 +1,2268 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> command
+Rule 1     command -> variable_declaration END
+Rule 2     command -> variable_attribution END
+Rule 3     command -> command command END
+Rule 4     command -> register_command END
+Rule 5     command -> if_conditional
+Rule 6     command -> else_conditional
+Rule 7     command -> OPEN_SCOPE
+Rule 8     command -> END_SCOPE
+Rule 9     command -> loop
+Rule 10    loop -> WHILE ( logic_expression ) OPEN_SCOPE
+Rule 11    if_conditional -> IF ( logic_expression ) OPEN_SCOPE
+Rule 12    else_conditional -> END_SCOPE ELSE OPEN_SCOPE
+Rule 13    register_command -> REGISTER ( expression )
+Rule 14    arithmetic_operator -> PLUS
+Rule 15    arithmetic_operator -> MINUS
+Rule 16    arithmetic_operator -> TIMES
+Rule 17    arithmetic_operator -> DIVISION
+Rule 18    arithmetic_operator -> MODULO
+Rule 19    binary_logic_operator -> AND
+Rule 20    binary_logic_operator -> OR
+Rule 21    unary_logic_operator -> NOT
+Rule 22    comparative_operator -> GT
+Rule 23    comparative_operator -> LT
+Rule 24    comparative_operator -> GE
+Rule 25    comparative_operator -> LE
+Rule 26    comparative_operator -> EQUAL
+Rule 27    comparative_operator -> NOT_EQUAL
+Rule 28    unary_operator -> unary_logic_operator
+Rule 29    binary_operator -> arithmetic_operator
+Rule 30    binary_operator -> comparative_operator
+Rule 31    binary_operator -> binary_logic_operator
+Rule 32    note -> ( REAL COMMA REAL COMMA INTEGER )
+Rule 33    integer_list -> INTEGER
+Rule 34    integer_list -> integer_list COMMA INTEGER
+Rule 35    scale -> [ integer_list ]
+Rule 36    chord -> ( INTEGER COMMA INTEGER COMMA INTEGER )
+Rule 37    chord_list -> chord
+Rule 38    chord_list -> chord_list COMMA chord
+Rule 39    harmonic_field -> [ chord_list ]
+Rule 40    note_list -> note
+Rule 41    note_list -> note_list COMMA note
+Rule 42    music -> ( [ note_list ] COMMA REAL )
+Rule 43    music -> ( [ ] COMMA REAL )
+Rule 44    variable_attribution -> IDENTIFIER = expression
+Rule 45    variable_declaration -> VARIABLE_TYPE IDENTIFIER = expression
+Rule 46    literal -> INTEGER
+Rule 47    literal -> REAL
+Rule 48    literal -> BOOLEAN
+Rule 49    literal -> note
+Rule 50    literal -> scale
+Rule 51    literal -> chord
+Rule 52    literal -> harmonic_field
+Rule 53    literal -> music
+Rule 54    expression -> arithmetic_expression
+Rule 55    expression -> logic_expression
+Rule 56    expression -> literal
+Rule 57    expression -> builtin_functions
+Rule 58    builtin_functions -> PREDEFINED_IDENTIFIER ( params_list )
+Rule 59    params_list -> expression
+Rule 60    params_list -> params_list COMMA expression
+Rule 61    arithmetic_expression -> arithmetic_literal
+Rule 62    arithmetic_expression -> ( arithmetic_expression )
+Rule 63    arithmetic_expression -> IDENTIFIER
+Rule 64    arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression
+Rule 65    logic_expression -> BOOLEAN
+Rule 66    logic_expression -> IDENTIFIER
+Rule 67    logic_expression -> ( logic_expression )
+Rule 68    logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression )
+Rule 69    logic_expression -> logic_expression binary_logic_operator logic_expression
+Rule 70    logic_expression -> unary_logic_operator logic_expression
+Rule 71    arithmetic_literal -> REAL
+Rule 72    arithmetic_literal -> INTEGER
+
+Terminals, with rules where they appear
+
+(                    : 10 11 13 32 36 42 43 58 62 67 68
+)                    : 10 11 13 32 36 42 43 58 62 67 68
+=                    : 44 45
+AND                  : 19
+BOOLEAN              : 48 65
+COMMA                : 32 32 34 36 36 38 41 42 43 60
+DIVISION             : 17
+ELSE                 : 12
+END                  : 1 2 3 4
+END_SCOPE            : 8 12
+EQUAL                : 26
+GE                   : 24
+GT                   : 22
+IDENTIFIER           : 44 45 63 66
+IF                   : 11
+INTEGER              : 32 33 34 36 36 36 46 72
+LE                   : 25
+LT                   : 23
+MINUS                : 15
+MODULO               : 18
+NOT                  : 21
+NOT_EQUAL            : 27
+OPEN_SCOPE           : 7 10 11 12
+OR                   : 20
+PLUS                 : 14
+PREDEFINED_IDENTIFIER : 58
+REAL                 : 32 32 42 43 47 71
+REGISTER             : 13
+TIMES                : 16
+VARIABLE_TYPE        : 45
+WHILE                : 10
+[                    : 35 39 42 43
+]                    : 35 39 42 43
+error                : 
+
+Nonterminals, with rules where they appear
+
+arithmetic_expression : 54 62 64 64 68 68
+arithmetic_literal   : 61
+arithmetic_operator  : 29 64
+binary_logic_operator : 31 69
+binary_operator      : 
+builtin_functions    : 57
+chord                : 37 38 51
+chord_list           : 38 39
+command              : 3 3 0
+comparative_operator : 30 68
+else_conditional     : 6
+expression           : 13 44 45 59 60
+harmonic_field       : 52
+if_conditional       : 5
+integer_list         : 34 35
+literal              : 56
+logic_expression     : 10 11 55 67 69 69 70
+loop                 : 9
+music                : 53
+note                 : 40 41 49
+note_list            : 41 42
+params_list          : 58 60
+register_command     : 4
+scale                : 50
+unary_logic_operator : 28 70
+unary_operator       : 
+variable_attribution : 2
+variable_declaration : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . command
+    (1) command -> . variable_declaration END
+    (2) command -> . variable_attribution END
+    (3) command -> . command command END
+    (4) command -> . register_command END
+    (5) command -> . if_conditional
+    (6) command -> . else_conditional
+    (7) command -> . OPEN_SCOPE
+    (8) command -> . END_SCOPE
+    (9) command -> . loop
+    (45) variable_declaration -> . VARIABLE_TYPE IDENTIFIER = expression
+    (44) variable_attribution -> . IDENTIFIER = expression
+    (13) register_command -> . REGISTER ( expression )
+    (11) if_conditional -> . IF ( logic_expression ) OPEN_SCOPE
+    (12) else_conditional -> . END_SCOPE ELSE OPEN_SCOPE
+    (10) loop -> . WHILE ( logic_expression ) OPEN_SCOPE
+
+    OPEN_SCOPE      shift and go to state 7
+    END_SCOPE       shift and go to state 8
+    VARIABLE_TYPE   shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    REGISTER        shift and go to state 12
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+
+    command                        shift and go to state 1
+    variable_declaration           shift and go to state 2
+    variable_attribution           shift and go to state 3
+    register_command               shift and go to state 4
+    if_conditional                 shift and go to state 5
+    else_conditional               shift and go to state 6
+    loop                           shift and go to state 9
+
+state 1
+
+    (0) S' -> command .
+    (3) command -> command . command END
+    (1) command -> . variable_declaration END
+    (2) command -> . variable_attribution END
+    (3) command -> . command command END
+    (4) command -> . register_command END
+    (5) command -> . if_conditional
+    (6) command -> . else_conditional
+    (7) command -> . OPEN_SCOPE
+    (8) command -> . END_SCOPE
+    (9) command -> . loop
+    (45) variable_declaration -> . VARIABLE_TYPE IDENTIFIER = expression
+    (44) variable_attribution -> . IDENTIFIER = expression
+    (13) register_command -> . REGISTER ( expression )
+    (11) if_conditional -> . IF ( logic_expression ) OPEN_SCOPE
+    (12) else_conditional -> . END_SCOPE ELSE OPEN_SCOPE
+    (10) loop -> . WHILE ( logic_expression ) OPEN_SCOPE
+
+    OPEN_SCOPE      shift and go to state 7
+    END_SCOPE       shift and go to state 8
+    VARIABLE_TYPE   shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    REGISTER        shift and go to state 12
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+
+    command                        shift and go to state 15
+    variable_declaration           shift and go to state 2
+    variable_attribution           shift and go to state 3
+    register_command               shift and go to state 4
+    if_conditional                 shift and go to state 5
+    else_conditional               shift and go to state 6
+    loop                           shift and go to state 9
+
+state 2
+
+    (1) command -> variable_declaration . END
+
+    END             shift and go to state 16
+
+
+state 3
+
+    (2) command -> variable_attribution . END
+
+    END             shift and go to state 17
+
+
+state 4
+
+    (4) command -> register_command . END
+
+    END             shift and go to state 18
+
+
+state 5
+
+    (5) command -> if_conditional .
+
+    OPEN_SCOPE      reduce using rule 5 (command -> if_conditional .)
+    END_SCOPE       reduce using rule 5 (command -> if_conditional .)
+    VARIABLE_TYPE   reduce using rule 5 (command -> if_conditional .)
+    IDENTIFIER      reduce using rule 5 (command -> if_conditional .)
+    REGISTER        reduce using rule 5 (command -> if_conditional .)
+    IF              reduce using rule 5 (command -> if_conditional .)
+    WHILE           reduce using rule 5 (command -> if_conditional .)
+    $end            reduce using rule 5 (command -> if_conditional .)
+    END             reduce using rule 5 (command -> if_conditional .)
+
+
+state 6
+
+    (6) command -> else_conditional .
+
+    OPEN_SCOPE      reduce using rule 6 (command -> else_conditional .)
+    END_SCOPE       reduce using rule 6 (command -> else_conditional .)
+    VARIABLE_TYPE   reduce using rule 6 (command -> else_conditional .)
+    IDENTIFIER      reduce using rule 6 (command -> else_conditional .)
+    REGISTER        reduce using rule 6 (command -> else_conditional .)
+    IF              reduce using rule 6 (command -> else_conditional .)
+    WHILE           reduce using rule 6 (command -> else_conditional .)
+    $end            reduce using rule 6 (command -> else_conditional .)
+    END             reduce using rule 6 (command -> else_conditional .)
+
+
+state 7
+
+    (7) command -> OPEN_SCOPE .
+
+    OPEN_SCOPE      reduce using rule 7 (command -> OPEN_SCOPE .)
+    END_SCOPE       reduce using rule 7 (command -> OPEN_SCOPE .)
+    VARIABLE_TYPE   reduce using rule 7 (command -> OPEN_SCOPE .)
+    IDENTIFIER      reduce using rule 7 (command -> OPEN_SCOPE .)
+    REGISTER        reduce using rule 7 (command -> OPEN_SCOPE .)
+    IF              reduce using rule 7 (command -> OPEN_SCOPE .)
+    WHILE           reduce using rule 7 (command -> OPEN_SCOPE .)
+    $end            reduce using rule 7 (command -> OPEN_SCOPE .)
+    END             reduce using rule 7 (command -> OPEN_SCOPE .)
+
+
+state 8
+
+    (8) command -> END_SCOPE .
+    (12) else_conditional -> END_SCOPE . ELSE OPEN_SCOPE
+
+    OPEN_SCOPE      reduce using rule 8 (command -> END_SCOPE .)
+    END_SCOPE       reduce using rule 8 (command -> END_SCOPE .)
+    VARIABLE_TYPE   reduce using rule 8 (command -> END_SCOPE .)
+    IDENTIFIER      reduce using rule 8 (command -> END_SCOPE .)
+    REGISTER        reduce using rule 8 (command -> END_SCOPE .)
+    IF              reduce using rule 8 (command -> END_SCOPE .)
+    WHILE           reduce using rule 8 (command -> END_SCOPE .)
+    $end            reduce using rule 8 (command -> END_SCOPE .)
+    END             reduce using rule 8 (command -> END_SCOPE .)
+    ELSE            shift and go to state 19
+
+
+state 9
+
+    (9) command -> loop .
+
+    OPEN_SCOPE      reduce using rule 9 (command -> loop .)
+    END_SCOPE       reduce using rule 9 (command -> loop .)
+    VARIABLE_TYPE   reduce using rule 9 (command -> loop .)
+    IDENTIFIER      reduce using rule 9 (command -> loop .)
+    REGISTER        reduce using rule 9 (command -> loop .)
+    IF              reduce using rule 9 (command -> loop .)
+    WHILE           reduce using rule 9 (command -> loop .)
+    $end            reduce using rule 9 (command -> loop .)
+    END             reduce using rule 9 (command -> loop .)
+
+
+state 10
+
+    (45) variable_declaration -> VARIABLE_TYPE . IDENTIFIER = expression
+
+    IDENTIFIER      shift and go to state 20
+
+
+state 11
+
+    (44) variable_attribution -> IDENTIFIER . = expression
+
+    =               shift and go to state 21
+
+
+state 12
+
+    (13) register_command -> REGISTER . ( expression )
+
+    (               shift and go to state 22
+
+
+state 13
+
+    (11) if_conditional -> IF . ( logic_expression ) OPEN_SCOPE
+
+    (               shift and go to state 23
+
+
+state 14
+
+    (10) loop -> WHILE . ( logic_expression ) OPEN_SCOPE
+
+    (               shift and go to state 24
+
+
+state 15
+
+    (3) command -> command command . END
+    (3) command -> command . command END
+    (1) command -> . variable_declaration END
+    (2) command -> . variable_attribution END
+    (3) command -> . command command END
+    (4) command -> . register_command END
+    (5) command -> . if_conditional
+    (6) command -> . else_conditional
+    (7) command -> . OPEN_SCOPE
+    (8) command -> . END_SCOPE
+    (9) command -> . loop
+    (45) variable_declaration -> . VARIABLE_TYPE IDENTIFIER = expression
+    (44) variable_attribution -> . IDENTIFIER = expression
+    (13) register_command -> . REGISTER ( expression )
+    (11) if_conditional -> . IF ( logic_expression ) OPEN_SCOPE
+    (12) else_conditional -> . END_SCOPE ELSE OPEN_SCOPE
+    (10) loop -> . WHILE ( logic_expression ) OPEN_SCOPE
+
+    END             shift and go to state 25
+    OPEN_SCOPE      shift and go to state 7
+    END_SCOPE       shift and go to state 8
+    VARIABLE_TYPE   shift and go to state 10
+    IDENTIFIER      shift and go to state 11
+    REGISTER        shift and go to state 12
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+
+    command                        shift and go to state 15
+    variable_declaration           shift and go to state 2
+    variable_attribution           shift and go to state 3
+    register_command               shift and go to state 4
+    if_conditional                 shift and go to state 5
+    else_conditional               shift and go to state 6
+    loop                           shift and go to state 9
+
+state 16
+
+    (1) command -> variable_declaration END .
+
+    OPEN_SCOPE      reduce using rule 1 (command -> variable_declaration END .)
+    END_SCOPE       reduce using rule 1 (command -> variable_declaration END .)
+    VARIABLE_TYPE   reduce using rule 1 (command -> variable_declaration END .)
+    IDENTIFIER      reduce using rule 1 (command -> variable_declaration END .)
+    REGISTER        reduce using rule 1 (command -> variable_declaration END .)
+    IF              reduce using rule 1 (command -> variable_declaration END .)
+    WHILE           reduce using rule 1 (command -> variable_declaration END .)
+    $end            reduce using rule 1 (command -> variable_declaration END .)
+    END             reduce using rule 1 (command -> variable_declaration END .)
+
+
+state 17
+
+    (2) command -> variable_attribution END .
+
+    OPEN_SCOPE      reduce using rule 2 (command -> variable_attribution END .)
+    END_SCOPE       reduce using rule 2 (command -> variable_attribution END .)
+    VARIABLE_TYPE   reduce using rule 2 (command -> variable_attribution END .)
+    IDENTIFIER      reduce using rule 2 (command -> variable_attribution END .)
+    REGISTER        reduce using rule 2 (command -> variable_attribution END .)
+    IF              reduce using rule 2 (command -> variable_attribution END .)
+    WHILE           reduce using rule 2 (command -> variable_attribution END .)
+    $end            reduce using rule 2 (command -> variable_attribution END .)
+    END             reduce using rule 2 (command -> variable_attribution END .)
+
+
+state 18
+
+    (4) command -> register_command END .
+
+    OPEN_SCOPE      reduce using rule 4 (command -> register_command END .)
+    END_SCOPE       reduce using rule 4 (command -> register_command END .)
+    VARIABLE_TYPE   reduce using rule 4 (command -> register_command END .)
+    IDENTIFIER      reduce using rule 4 (command -> register_command END .)
+    REGISTER        reduce using rule 4 (command -> register_command END .)
+    IF              reduce using rule 4 (command -> register_command END .)
+    WHILE           reduce using rule 4 (command -> register_command END .)
+    $end            reduce using rule 4 (command -> register_command END .)
+    END             reduce using rule 4 (command -> register_command END .)
+
+
+state 19
+
+    (12) else_conditional -> END_SCOPE ELSE . OPEN_SCOPE
+
+    OPEN_SCOPE      shift and go to state 26
+
+
+state 20
+
+    (45) variable_declaration -> VARIABLE_TYPE IDENTIFIER . = expression
+
+    =               shift and go to state 27
+
+
+state 21
+
+    (44) variable_attribution -> IDENTIFIER = . expression
+    (54) expression -> . arithmetic_expression
+    (55) expression -> . logic_expression
+    (56) expression -> . literal
+    (57) expression -> . builtin_functions
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (46) literal -> . INTEGER
+    (47) literal -> . REAL
+    (48) literal -> . BOOLEAN
+    (49) literal -> . note
+    (50) literal -> . scale
+    (51) literal -> . chord
+    (52) literal -> . harmonic_field
+    (53) literal -> . music
+    (58) builtin_functions -> . PREDEFINED_IDENTIFIER ( params_list )
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+    (21) unary_logic_operator -> . NOT
+    (32) note -> . ( REAL COMMA REAL COMMA INTEGER )
+    (35) scale -> . [ integer_list ]
+    (36) chord -> . ( INTEGER COMMA INTEGER COMMA INTEGER )
+    (39) harmonic_field -> . [ chord_list ]
+    (42) music -> . ( [ note_list ] COMMA REAL )
+    (43) music -> . ( [ ] COMMA REAL )
+
+    (               shift and go to state 35
+    IDENTIFIER      shift and go to state 28
+    BOOLEAN         shift and go to state 36
+    INTEGER         shift and go to state 38
+    REAL            shift and go to state 39
+    PREDEFINED_IDENTIFIER shift and go to state 45
+    NOT             shift and go to state 46
+    [               shift and go to state 47
+
+    expression                     shift and go to state 29
+    arithmetic_expression          shift and go to state 30
+    logic_expression               shift and go to state 31
+    literal                        shift and go to state 32
+    builtin_functions              shift and go to state 33
+    arithmetic_literal             shift and go to state 34
+    unary_logic_operator           shift and go to state 37
+    note                           shift and go to state 40
+    scale                          shift and go to state 41
+    chord                          shift and go to state 42
+    harmonic_field                 shift and go to state 43
+    music                          shift and go to state 44
+
+state 22
+
+    (13) register_command -> REGISTER ( . expression )
+    (54) expression -> . arithmetic_expression
+    (55) expression -> . logic_expression
+    (56) expression -> . literal
+    (57) expression -> . builtin_functions
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (46) literal -> . INTEGER
+    (47) literal -> . REAL
+    (48) literal -> . BOOLEAN
+    (49) literal -> . note
+    (50) literal -> . scale
+    (51) literal -> . chord
+    (52) literal -> . harmonic_field
+    (53) literal -> . music
+    (58) builtin_functions -> . PREDEFINED_IDENTIFIER ( params_list )
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+    (21) unary_logic_operator -> . NOT
+    (32) note -> . ( REAL COMMA REAL COMMA INTEGER )
+    (35) scale -> . [ integer_list ]
+    (36) chord -> . ( INTEGER COMMA INTEGER COMMA INTEGER )
+    (39) harmonic_field -> . [ chord_list ]
+    (42) music -> . ( [ note_list ] COMMA REAL )
+    (43) music -> . ( [ ] COMMA REAL )
+
+    (               shift and go to state 35
+    IDENTIFIER      shift and go to state 28
+    BOOLEAN         shift and go to state 36
+    INTEGER         shift and go to state 38
+    REAL            shift and go to state 39
+    PREDEFINED_IDENTIFIER shift and go to state 45
+    NOT             shift and go to state 46
+    [               shift and go to state 47
+
+    expression                     shift and go to state 48
+    arithmetic_expression          shift and go to state 30
+    logic_expression               shift and go to state 31
+    literal                        shift and go to state 32
+    builtin_functions              shift and go to state 33
+    arithmetic_literal             shift and go to state 34
+    unary_logic_operator           shift and go to state 37
+    note                           shift and go to state 40
+    scale                          shift and go to state 41
+    chord                          shift and go to state 42
+    harmonic_field                 shift and go to state 43
+    music                          shift and go to state 44
+
+state 23
+
+    (11) if_conditional -> IF ( . logic_expression ) OPEN_SCOPE
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (21) unary_logic_operator -> . NOT
+
+    BOOLEAN         shift and go to state 51
+    IDENTIFIER      shift and go to state 52
+    (               shift and go to state 49
+    NOT             shift and go to state 46
+
+    logic_expression               shift and go to state 50
+    unary_logic_operator           shift and go to state 37
+
+state 24
+
+    (10) loop -> WHILE ( . logic_expression ) OPEN_SCOPE
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (21) unary_logic_operator -> . NOT
+
+    BOOLEAN         shift and go to state 51
+    IDENTIFIER      shift and go to state 52
+    (               shift and go to state 49
+    NOT             shift and go to state 46
+
+    logic_expression               shift and go to state 53
+    unary_logic_operator           shift and go to state 37
+
+state 25
+
+    (3) command -> command command END .
+
+    OPEN_SCOPE      reduce using rule 3 (command -> command command END .)
+    END_SCOPE       reduce using rule 3 (command -> command command END .)
+    VARIABLE_TYPE   reduce using rule 3 (command -> command command END .)
+    IDENTIFIER      reduce using rule 3 (command -> command command END .)
+    REGISTER        reduce using rule 3 (command -> command command END .)
+    IF              reduce using rule 3 (command -> command command END .)
+    WHILE           reduce using rule 3 (command -> command command END .)
+    $end            reduce using rule 3 (command -> command command END .)
+    END             reduce using rule 3 (command -> command command END .)
+
+
+state 26
+
+    (12) else_conditional -> END_SCOPE ELSE OPEN_SCOPE .
+
+    OPEN_SCOPE      reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    END_SCOPE       reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    VARIABLE_TYPE   reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    IDENTIFIER      reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    REGISTER        reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    IF              reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    WHILE           reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    $end            reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+    END             reduce using rule 12 (else_conditional -> END_SCOPE ELSE OPEN_SCOPE .)
+
+
+state 27
+
+    (45) variable_declaration -> VARIABLE_TYPE IDENTIFIER = . expression
+    (54) expression -> . arithmetic_expression
+    (55) expression -> . logic_expression
+    (56) expression -> . literal
+    (57) expression -> . builtin_functions
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (46) literal -> . INTEGER
+    (47) literal -> . REAL
+    (48) literal -> . BOOLEAN
+    (49) literal -> . note
+    (50) literal -> . scale
+    (51) literal -> . chord
+    (52) literal -> . harmonic_field
+    (53) literal -> . music
+    (58) builtin_functions -> . PREDEFINED_IDENTIFIER ( params_list )
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+    (21) unary_logic_operator -> . NOT
+    (32) note -> . ( REAL COMMA REAL COMMA INTEGER )
+    (35) scale -> . [ integer_list ]
+    (36) chord -> . ( INTEGER COMMA INTEGER COMMA INTEGER )
+    (39) harmonic_field -> . [ chord_list ]
+    (42) music -> . ( [ note_list ] COMMA REAL )
+    (43) music -> . ( [ ] COMMA REAL )
+
+    (               shift and go to state 35
+    IDENTIFIER      shift and go to state 28
+    BOOLEAN         shift and go to state 36
+    INTEGER         shift and go to state 38
+    REAL            shift and go to state 39
+    PREDEFINED_IDENTIFIER shift and go to state 45
+    NOT             shift and go to state 46
+    [               shift and go to state 47
+
+    expression                     shift and go to state 54
+    arithmetic_expression          shift and go to state 30
+    logic_expression               shift and go to state 31
+    literal                        shift and go to state 32
+    builtin_functions              shift and go to state 33
+    arithmetic_literal             shift and go to state 34
+    unary_logic_operator           shift and go to state 37
+    note                           shift and go to state 40
+    scale                          shift and go to state 41
+    chord                          shift and go to state 42
+    harmonic_field                 shift and go to state 43
+    music                          shift and go to state 44
+
+state 28
+
+    (63) arithmetic_expression -> IDENTIFIER .
+    (66) logic_expression -> IDENTIFIER .
+
+  ! reduce/reduce conflict for END resolved using rule 63 (arithmetic_expression -> IDENTIFIER .)
+  ! reduce/reduce conflict for ) resolved using rule 63 (arithmetic_expression -> IDENTIFIER .)
+  ! reduce/reduce conflict for COMMA resolved using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    PLUS            reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    MINUS           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    TIMES           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    DIVISION        reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    MODULO          reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    END             reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    )               reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    GT              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    LT              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    GE              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    LE              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    EQUAL           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    COMMA           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    AND             reduce using rule 66 (logic_expression -> IDENTIFIER .)
+    OR              reduce using rule 66 (logic_expression -> IDENTIFIER .)
+
+  ! END             [ reduce using rule 66 (logic_expression -> IDENTIFIER .) ]
+  ! )               [ reduce using rule 66 (logic_expression -> IDENTIFIER .) ]
+  ! COMMA           [ reduce using rule 66 (logic_expression -> IDENTIFIER .) ]
+
+
+state 29
+
+    (44) variable_attribution -> IDENTIFIER = expression .
+
+    END             reduce using rule 44 (variable_attribution -> IDENTIFIER = expression .)
+
+
+state 30
+
+    (54) expression -> arithmetic_expression .
+    (64) arithmetic_expression -> arithmetic_expression . arithmetic_operator arithmetic_expression
+    (14) arithmetic_operator -> . PLUS
+    (15) arithmetic_operator -> . MINUS
+    (16) arithmetic_operator -> . TIMES
+    (17) arithmetic_operator -> . DIVISION
+    (18) arithmetic_operator -> . MODULO
+
+    END             reduce using rule 54 (expression -> arithmetic_expression .)
+    )               reduce using rule 54 (expression -> arithmetic_expression .)
+    COMMA           reduce using rule 54 (expression -> arithmetic_expression .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
+
+    arithmetic_operator            shift and go to state 55
+
+state 31
+
+    (55) expression -> logic_expression .
+    (69) logic_expression -> logic_expression . binary_logic_operator logic_expression
+    (19) binary_logic_operator -> . AND
+    (20) binary_logic_operator -> . OR
+
+    END             reduce using rule 55 (expression -> logic_expression .)
+    )               reduce using rule 55 (expression -> logic_expression .)
+    COMMA           reduce using rule 55 (expression -> logic_expression .)
+    AND             shift and go to state 62
+    OR              shift and go to state 63
+
+    binary_logic_operator          shift and go to state 61
+
+state 32
+
+    (56) expression -> literal .
+
+    END             reduce using rule 56 (expression -> literal .)
+    )               reduce using rule 56 (expression -> literal .)
+    COMMA           reduce using rule 56 (expression -> literal .)
+
+
+state 33
+
+    (57) expression -> builtin_functions .
+
+    END             reduce using rule 57 (expression -> builtin_functions .)
+    )               reduce using rule 57 (expression -> builtin_functions .)
+    COMMA           reduce using rule 57 (expression -> builtin_functions .)
+
+
+state 34
+
+    (61) arithmetic_expression -> arithmetic_literal .
+
+    PLUS            reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    MINUS           reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    TIMES           reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    DIVISION        reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    MODULO          reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    END             reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    )               reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    GT              reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    LT              reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    GE              reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    LE              reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    EQUAL           reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    NOT_EQUAL       reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+    COMMA           reduce using rule 61 (arithmetic_expression -> arithmetic_literal .)
+
+
+state 35
+
+    (62) arithmetic_expression -> ( . arithmetic_expression )
+    (67) logic_expression -> ( . logic_expression )
+    (68) logic_expression -> ( . arithmetic_expression comparative_operator arithmetic_expression )
+    (32) note -> ( . REAL COMMA REAL COMMA INTEGER )
+    (36) chord -> ( . INTEGER COMMA INTEGER COMMA INTEGER )
+    (42) music -> ( . [ note_list ] COMMA REAL )
+    (43) music -> ( . [ ] COMMA REAL )
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+    (21) unary_logic_operator -> . NOT
+
+    REAL            shift and go to state 67
+    INTEGER         shift and go to state 68
+    [               shift and go to state 69
+    (               shift and go to state 64
+    IDENTIFIER      shift and go to state 28
+    BOOLEAN         shift and go to state 51
+    NOT             shift and go to state 46
+
+    arithmetic_expression          shift and go to state 65
+    logic_expression               shift and go to state 66
+    arithmetic_literal             shift and go to state 34
+    unary_logic_operator           shift and go to state 37
+
+state 36
+
+    (65) logic_expression -> BOOLEAN .
+    (48) literal -> BOOLEAN .
+
+  ! reduce/reduce conflict for END resolved using rule 48 (literal -> BOOLEAN .)
+  ! reduce/reduce conflict for ) resolved using rule 48 (literal -> BOOLEAN .)
+  ! reduce/reduce conflict for COMMA resolved using rule 48 (literal -> BOOLEAN .)
+    AND             reduce using rule 65 (logic_expression -> BOOLEAN .)
+    OR              reduce using rule 65 (logic_expression -> BOOLEAN .)
+    END             reduce using rule 48 (literal -> BOOLEAN .)
+    )               reduce using rule 48 (literal -> BOOLEAN .)
+    COMMA           reduce using rule 48 (literal -> BOOLEAN .)
+
+  ! END             [ reduce using rule 65 (logic_expression -> BOOLEAN .) ]
+  ! )               [ reduce using rule 65 (logic_expression -> BOOLEAN .) ]
+  ! COMMA           [ reduce using rule 65 (logic_expression -> BOOLEAN .) ]
+
+
+state 37
+
+    (70) logic_expression -> unary_logic_operator . logic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (21) unary_logic_operator -> . NOT
+
+    BOOLEAN         shift and go to state 51
+    IDENTIFIER      shift and go to state 52
+    (               shift and go to state 49
+    NOT             shift and go to state 46
+
+    unary_logic_operator           shift and go to state 37
+    logic_expression               shift and go to state 70
+
+state 38
+
+    (46) literal -> INTEGER .
+    (72) arithmetic_literal -> INTEGER .
+
+  ! reduce/reduce conflict for END resolved using rule 46 (literal -> INTEGER .)
+  ! reduce/reduce conflict for ) resolved using rule 46 (literal -> INTEGER .)
+  ! reduce/reduce conflict for COMMA resolved using rule 46 (literal -> INTEGER .)
+    END             reduce using rule 46 (literal -> INTEGER .)
+    )               reduce using rule 46 (literal -> INTEGER .)
+    COMMA           reduce using rule 46 (literal -> INTEGER .)
+    PLUS            reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    MINUS           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    TIMES           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    DIVISION        reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    MODULO          reduce using rule 72 (arithmetic_literal -> INTEGER .)
+
+  ! END             [ reduce using rule 72 (arithmetic_literal -> INTEGER .) ]
+  ! )               [ reduce using rule 72 (arithmetic_literal -> INTEGER .) ]
+  ! COMMA           [ reduce using rule 72 (arithmetic_literal -> INTEGER .) ]
+
+
+state 39
+
+    (47) literal -> REAL .
+    (71) arithmetic_literal -> REAL .
+
+  ! reduce/reduce conflict for END resolved using rule 47 (literal -> REAL .)
+  ! reduce/reduce conflict for ) resolved using rule 47 (literal -> REAL .)
+  ! reduce/reduce conflict for COMMA resolved using rule 47 (literal -> REAL .)
+    END             reduce using rule 47 (literal -> REAL .)
+    )               reduce using rule 47 (literal -> REAL .)
+    COMMA           reduce using rule 47 (literal -> REAL .)
+    PLUS            reduce using rule 71 (arithmetic_literal -> REAL .)
+    MINUS           reduce using rule 71 (arithmetic_literal -> REAL .)
+    TIMES           reduce using rule 71 (arithmetic_literal -> REAL .)
+    DIVISION        reduce using rule 71 (arithmetic_literal -> REAL .)
+    MODULO          reduce using rule 71 (arithmetic_literal -> REAL .)
+
+  ! END             [ reduce using rule 71 (arithmetic_literal -> REAL .) ]
+  ! )               [ reduce using rule 71 (arithmetic_literal -> REAL .) ]
+  ! COMMA           [ reduce using rule 71 (arithmetic_literal -> REAL .) ]
+
+
+state 40
+
+    (49) literal -> note .
+
+    END             reduce using rule 49 (literal -> note .)
+    )               reduce using rule 49 (literal -> note .)
+    COMMA           reduce using rule 49 (literal -> note .)
+
+
+state 41
+
+    (50) literal -> scale .
+
+    END             reduce using rule 50 (literal -> scale .)
+    )               reduce using rule 50 (literal -> scale .)
+    COMMA           reduce using rule 50 (literal -> scale .)
+
+
+state 42
+
+    (51) literal -> chord .
+
+    END             reduce using rule 51 (literal -> chord .)
+    )               reduce using rule 51 (literal -> chord .)
+    COMMA           reduce using rule 51 (literal -> chord .)
+
+
+state 43
+
+    (52) literal -> harmonic_field .
+
+    END             reduce using rule 52 (literal -> harmonic_field .)
+    )               reduce using rule 52 (literal -> harmonic_field .)
+    COMMA           reduce using rule 52 (literal -> harmonic_field .)
+
+
+state 44
+
+    (53) literal -> music .
+
+    END             reduce using rule 53 (literal -> music .)
+    )               reduce using rule 53 (literal -> music .)
+    COMMA           reduce using rule 53 (literal -> music .)
+
+
+state 45
+
+    (58) builtin_functions -> PREDEFINED_IDENTIFIER . ( params_list )
+
+    (               shift and go to state 71
+
+
+state 46
+
+    (21) unary_logic_operator -> NOT .
+
+    BOOLEAN         reduce using rule 21 (unary_logic_operator -> NOT .)
+    IDENTIFIER      reduce using rule 21 (unary_logic_operator -> NOT .)
+    (               reduce using rule 21 (unary_logic_operator -> NOT .)
+    NOT             reduce using rule 21 (unary_logic_operator -> NOT .)
+
+
+state 47
+
+    (35) scale -> [ . integer_list ]
+    (39) harmonic_field -> [ . chord_list ]
+    (33) integer_list -> . INTEGER
+    (34) integer_list -> . integer_list COMMA INTEGER
+    (37) chord_list -> . chord
+    (38) chord_list -> . chord_list COMMA chord
+    (36) chord -> . ( INTEGER COMMA INTEGER COMMA INTEGER )
+
+    INTEGER         shift and go to state 74
+    (               shift and go to state 76
+
+    integer_list                   shift and go to state 72
+    chord_list                     shift and go to state 73
+    chord                          shift and go to state 75
+
+state 48
+
+    (13) register_command -> REGISTER ( expression . )
+
+    )               shift and go to state 77
+
+
+state 49
+
+    (67) logic_expression -> ( . logic_expression )
+    (68) logic_expression -> ( . arithmetic_expression comparative_operator arithmetic_expression )
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (21) unary_logic_operator -> . NOT
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+
+    BOOLEAN         shift and go to state 51
+    IDENTIFIER      shift and go to state 80
+    (               shift and go to state 78
+    NOT             shift and go to state 46
+    REAL            shift and go to state 81
+    INTEGER         shift and go to state 82
+
+    logic_expression               shift and go to state 66
+    arithmetic_expression          shift and go to state 79
+    unary_logic_operator           shift and go to state 37
+    arithmetic_literal             shift and go to state 34
+
+state 50
+
+    (11) if_conditional -> IF ( logic_expression . ) OPEN_SCOPE
+    (69) logic_expression -> logic_expression . binary_logic_operator logic_expression
+    (19) binary_logic_operator -> . AND
+    (20) binary_logic_operator -> . OR
+
+    )               shift and go to state 83
+    AND             shift and go to state 62
+    OR              shift and go to state 63
+
+    binary_logic_operator          shift and go to state 61
+
+state 51
+
+    (65) logic_expression -> BOOLEAN .
+
+    )               reduce using rule 65 (logic_expression -> BOOLEAN .)
+    AND             reduce using rule 65 (logic_expression -> BOOLEAN .)
+    OR              reduce using rule 65 (logic_expression -> BOOLEAN .)
+    END             reduce using rule 65 (logic_expression -> BOOLEAN .)
+    COMMA           reduce using rule 65 (logic_expression -> BOOLEAN .)
+
+
+state 52
+
+    (66) logic_expression -> IDENTIFIER .
+
+    )               reduce using rule 66 (logic_expression -> IDENTIFIER .)
+    AND             reduce using rule 66 (logic_expression -> IDENTIFIER .)
+    OR              reduce using rule 66 (logic_expression -> IDENTIFIER .)
+    END             reduce using rule 66 (logic_expression -> IDENTIFIER .)
+    COMMA           reduce using rule 66 (logic_expression -> IDENTIFIER .)
+
+
+state 53
+
+    (10) loop -> WHILE ( logic_expression . ) OPEN_SCOPE
+    (69) logic_expression -> logic_expression . binary_logic_operator logic_expression
+    (19) binary_logic_operator -> . AND
+    (20) binary_logic_operator -> . OR
+
+    )               shift and go to state 84
+    AND             shift and go to state 62
+    OR              shift and go to state 63
+
+    binary_logic_operator          shift and go to state 61
+
+state 54
+
+    (45) variable_declaration -> VARIABLE_TYPE IDENTIFIER = expression .
+
+    END             reduce using rule 45 (variable_declaration -> VARIABLE_TYPE IDENTIFIER = expression .)
+
+
+state 55
+
+    (64) arithmetic_expression -> arithmetic_expression arithmetic_operator . arithmetic_expression
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+
+    (               shift and go to state 86
+    IDENTIFIER      shift and go to state 87
+    REAL            shift and go to state 81
+    INTEGER         shift and go to state 82
+
+    arithmetic_expression          shift and go to state 85
+    arithmetic_literal             shift and go to state 34
+
+state 56
+
+    (14) arithmetic_operator -> PLUS .
+
+    (               reduce using rule 14 (arithmetic_operator -> PLUS .)
+    IDENTIFIER      reduce using rule 14 (arithmetic_operator -> PLUS .)
+    REAL            reduce using rule 14 (arithmetic_operator -> PLUS .)
+    INTEGER         reduce using rule 14 (arithmetic_operator -> PLUS .)
+
+
+state 57
+
+    (15) arithmetic_operator -> MINUS .
+
+    (               reduce using rule 15 (arithmetic_operator -> MINUS .)
+    IDENTIFIER      reduce using rule 15 (arithmetic_operator -> MINUS .)
+    REAL            reduce using rule 15 (arithmetic_operator -> MINUS .)
+    INTEGER         reduce using rule 15 (arithmetic_operator -> MINUS .)
+
+
+state 58
+
+    (16) arithmetic_operator -> TIMES .
+
+    (               reduce using rule 16 (arithmetic_operator -> TIMES .)
+    IDENTIFIER      reduce using rule 16 (arithmetic_operator -> TIMES .)
+    REAL            reduce using rule 16 (arithmetic_operator -> TIMES .)
+    INTEGER         reduce using rule 16 (arithmetic_operator -> TIMES .)
+
+
+state 59
+
+    (17) arithmetic_operator -> DIVISION .
+
+    (               reduce using rule 17 (arithmetic_operator -> DIVISION .)
+    IDENTIFIER      reduce using rule 17 (arithmetic_operator -> DIVISION .)
+    REAL            reduce using rule 17 (arithmetic_operator -> DIVISION .)
+    INTEGER         reduce using rule 17 (arithmetic_operator -> DIVISION .)
+
+
+state 60
+
+    (18) arithmetic_operator -> MODULO .
+
+    (               reduce using rule 18 (arithmetic_operator -> MODULO .)
+    IDENTIFIER      reduce using rule 18 (arithmetic_operator -> MODULO .)
+    REAL            reduce using rule 18 (arithmetic_operator -> MODULO .)
+    INTEGER         reduce using rule 18 (arithmetic_operator -> MODULO .)
+
+
+state 61
+
+    (69) logic_expression -> logic_expression binary_logic_operator . logic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (21) unary_logic_operator -> . NOT
+
+    BOOLEAN         shift and go to state 51
+    IDENTIFIER      shift and go to state 52
+    (               shift and go to state 49
+    NOT             shift and go to state 46
+
+    logic_expression               shift and go to state 88
+    unary_logic_operator           shift and go to state 37
+
+state 62
+
+    (19) binary_logic_operator -> AND .
+
+    BOOLEAN         reduce using rule 19 (binary_logic_operator -> AND .)
+    IDENTIFIER      reduce using rule 19 (binary_logic_operator -> AND .)
+    (               reduce using rule 19 (binary_logic_operator -> AND .)
+    NOT             reduce using rule 19 (binary_logic_operator -> AND .)
+
+
+state 63
+
+    (20) binary_logic_operator -> OR .
+
+    BOOLEAN         reduce using rule 20 (binary_logic_operator -> OR .)
+    IDENTIFIER      reduce using rule 20 (binary_logic_operator -> OR .)
+    (               reduce using rule 20 (binary_logic_operator -> OR .)
+    NOT             reduce using rule 20 (binary_logic_operator -> OR .)
+
+
+state 64
+
+    (62) arithmetic_expression -> ( . arithmetic_expression )
+    (67) logic_expression -> ( . logic_expression )
+    (68) logic_expression -> ( . arithmetic_expression comparative_operator arithmetic_expression )
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+    (21) unary_logic_operator -> . NOT
+
+    (               shift and go to state 64
+    IDENTIFIER      shift and go to state 28
+    BOOLEAN         shift and go to state 51
+    REAL            shift and go to state 81
+    INTEGER         shift and go to state 82
+    NOT             shift and go to state 46
+
+    arithmetic_expression          shift and go to state 65
+    logic_expression               shift and go to state 66
+    arithmetic_literal             shift and go to state 34
+    unary_logic_operator           shift and go to state 37
+
+state 65
+
+    (62) arithmetic_expression -> ( arithmetic_expression . )
+    (68) logic_expression -> ( arithmetic_expression . comparative_operator arithmetic_expression )
+    (64) arithmetic_expression -> arithmetic_expression . arithmetic_operator arithmetic_expression
+    (22) comparative_operator -> . GT
+    (23) comparative_operator -> . LT
+    (24) comparative_operator -> . GE
+    (25) comparative_operator -> . LE
+    (26) comparative_operator -> . EQUAL
+    (27) comparative_operator -> . NOT_EQUAL
+    (14) arithmetic_operator -> . PLUS
+    (15) arithmetic_operator -> . MINUS
+    (16) arithmetic_operator -> . TIMES
+    (17) arithmetic_operator -> . DIVISION
+    (18) arithmetic_operator -> . MODULO
+
+    )               shift and go to state 89
+    GT              shift and go to state 91
+    LT              shift and go to state 92
+    GE              shift and go to state 93
+    LE              shift and go to state 94
+    EQUAL           shift and go to state 95
+    NOT_EQUAL       shift and go to state 96
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
+
+    comparative_operator           shift and go to state 90
+    arithmetic_operator            shift and go to state 55
+
+state 66
+
+    (67) logic_expression -> ( logic_expression . )
+    (69) logic_expression -> logic_expression . binary_logic_operator logic_expression
+    (19) binary_logic_operator -> . AND
+    (20) binary_logic_operator -> . OR
+
+    )               shift and go to state 97
+    AND             shift and go to state 62
+    OR              shift and go to state 63
+
+    binary_logic_operator          shift and go to state 61
+
+state 67
+
+    (32) note -> ( REAL . COMMA REAL COMMA INTEGER )
+    (71) arithmetic_literal -> REAL .
+
+    COMMA           shift and go to state 98
+    )               reduce using rule 71 (arithmetic_literal -> REAL .)
+    GT              reduce using rule 71 (arithmetic_literal -> REAL .)
+    LT              reduce using rule 71 (arithmetic_literal -> REAL .)
+    GE              reduce using rule 71 (arithmetic_literal -> REAL .)
+    LE              reduce using rule 71 (arithmetic_literal -> REAL .)
+    EQUAL           reduce using rule 71 (arithmetic_literal -> REAL .)
+    NOT_EQUAL       reduce using rule 71 (arithmetic_literal -> REAL .)
+    PLUS            reduce using rule 71 (arithmetic_literal -> REAL .)
+    MINUS           reduce using rule 71 (arithmetic_literal -> REAL .)
+    TIMES           reduce using rule 71 (arithmetic_literal -> REAL .)
+    DIVISION        reduce using rule 71 (arithmetic_literal -> REAL .)
+    MODULO          reduce using rule 71 (arithmetic_literal -> REAL .)
+
+
+state 68
+
+    (36) chord -> ( INTEGER . COMMA INTEGER COMMA INTEGER )
+    (72) arithmetic_literal -> INTEGER .
+
+    COMMA           shift and go to state 99
+    )               reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    GT              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    LT              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    GE              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    LE              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    EQUAL           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    NOT_EQUAL       reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    PLUS            reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    MINUS           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    TIMES           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    DIVISION        reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    MODULO          reduce using rule 72 (arithmetic_literal -> INTEGER .)
+
+
+state 69
+
+    (42) music -> ( [ . note_list ] COMMA REAL )
+    (43) music -> ( [ . ] COMMA REAL )
+    (40) note_list -> . note
+    (41) note_list -> . note_list COMMA note
+    (32) note -> . ( REAL COMMA REAL COMMA INTEGER )
+
+    ]               shift and go to state 102
+    (               shift and go to state 100
+
+    note_list                      shift and go to state 101
+    note                           shift and go to state 103
+
+state 70
+
+    (70) logic_expression -> unary_logic_operator logic_expression .
+    (69) logic_expression -> logic_expression . binary_logic_operator logic_expression
+    (19) binary_logic_operator -> . AND
+    (20) binary_logic_operator -> . OR
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    END             reduce using rule 70 (logic_expression -> unary_logic_operator logic_expression .)
+    )               reduce using rule 70 (logic_expression -> unary_logic_operator logic_expression .)
+    COMMA           reduce using rule 70 (logic_expression -> unary_logic_operator logic_expression .)
+    AND             shift and go to state 62
+    OR              shift and go to state 63
+
+  ! AND             [ reduce using rule 70 (logic_expression -> unary_logic_operator logic_expression .) ]
+  ! OR              [ reduce using rule 70 (logic_expression -> unary_logic_operator logic_expression .) ]
+
+    binary_logic_operator          shift and go to state 61
+
+state 71
+
+    (58) builtin_functions -> PREDEFINED_IDENTIFIER ( . params_list )
+    (59) params_list -> . expression
+    (60) params_list -> . params_list COMMA expression
+    (54) expression -> . arithmetic_expression
+    (55) expression -> . logic_expression
+    (56) expression -> . literal
+    (57) expression -> . builtin_functions
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (46) literal -> . INTEGER
+    (47) literal -> . REAL
+    (48) literal -> . BOOLEAN
+    (49) literal -> . note
+    (50) literal -> . scale
+    (51) literal -> . chord
+    (52) literal -> . harmonic_field
+    (53) literal -> . music
+    (58) builtin_functions -> . PREDEFINED_IDENTIFIER ( params_list )
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+    (21) unary_logic_operator -> . NOT
+    (32) note -> . ( REAL COMMA REAL COMMA INTEGER )
+    (35) scale -> . [ integer_list ]
+    (36) chord -> . ( INTEGER COMMA INTEGER COMMA INTEGER )
+    (39) harmonic_field -> . [ chord_list ]
+    (42) music -> . ( [ note_list ] COMMA REAL )
+    (43) music -> . ( [ ] COMMA REAL )
+
+    (               shift and go to state 35
+    IDENTIFIER      shift and go to state 28
+    BOOLEAN         shift and go to state 36
+    INTEGER         shift and go to state 38
+    REAL            shift and go to state 39
+    PREDEFINED_IDENTIFIER shift and go to state 45
+    NOT             shift and go to state 46
+    [               shift and go to state 47
+
+    params_list                    shift and go to state 104
+    expression                     shift and go to state 105
+    arithmetic_expression          shift and go to state 30
+    logic_expression               shift and go to state 31
+    literal                        shift and go to state 32
+    builtin_functions              shift and go to state 33
+    arithmetic_literal             shift and go to state 34
+    unary_logic_operator           shift and go to state 37
+    note                           shift and go to state 40
+    scale                          shift and go to state 41
+    chord                          shift and go to state 42
+    harmonic_field                 shift and go to state 43
+    music                          shift and go to state 44
+
+state 72
+
+    (35) scale -> [ integer_list . ]
+    (34) integer_list -> integer_list . COMMA INTEGER
+
+    ]               shift and go to state 106
+    COMMA           shift and go to state 107
+
+
+state 73
+
+    (39) harmonic_field -> [ chord_list . ]
+    (38) chord_list -> chord_list . COMMA chord
+
+    ]               shift and go to state 108
+    COMMA           shift and go to state 109
+
+
+state 74
+
+    (33) integer_list -> INTEGER .
+
+    ]               reduce using rule 33 (integer_list -> INTEGER .)
+    COMMA           reduce using rule 33 (integer_list -> INTEGER .)
+
+
+state 75
+
+    (37) chord_list -> chord .
+
+    ]               reduce using rule 37 (chord_list -> chord .)
+    COMMA           reduce using rule 37 (chord_list -> chord .)
+
+
+state 76
+
+    (36) chord -> ( . INTEGER COMMA INTEGER COMMA INTEGER )
+
+    INTEGER         shift and go to state 110
+
+
+state 77
+
+    (13) register_command -> REGISTER ( expression ) .
+
+    END             reduce using rule 13 (register_command -> REGISTER ( expression ) .)
+
+
+state 78
+
+    (67) logic_expression -> ( . logic_expression )
+    (68) logic_expression -> ( . arithmetic_expression comparative_operator arithmetic_expression )
+    (62) arithmetic_expression -> ( . arithmetic_expression )
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (21) unary_logic_operator -> . NOT
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+
+    BOOLEAN         shift and go to state 51
+    IDENTIFIER      shift and go to state 80
+    (               shift and go to state 78
+    NOT             shift and go to state 46
+    REAL            shift and go to state 81
+    INTEGER         shift and go to state 82
+
+    logic_expression               shift and go to state 66
+    arithmetic_expression          shift and go to state 111
+    unary_logic_operator           shift and go to state 37
+    arithmetic_literal             shift and go to state 34
+
+state 79
+
+    (68) logic_expression -> ( arithmetic_expression . comparative_operator arithmetic_expression )
+    (64) arithmetic_expression -> arithmetic_expression . arithmetic_operator arithmetic_expression
+    (22) comparative_operator -> . GT
+    (23) comparative_operator -> . LT
+    (24) comparative_operator -> . GE
+    (25) comparative_operator -> . LE
+    (26) comparative_operator -> . EQUAL
+    (27) comparative_operator -> . NOT_EQUAL
+    (14) arithmetic_operator -> . PLUS
+    (15) arithmetic_operator -> . MINUS
+    (16) arithmetic_operator -> . TIMES
+    (17) arithmetic_operator -> . DIVISION
+    (18) arithmetic_operator -> . MODULO
+
+    GT              shift and go to state 91
+    LT              shift and go to state 92
+    GE              shift and go to state 93
+    LE              shift and go to state 94
+    EQUAL           shift and go to state 95
+    NOT_EQUAL       shift and go to state 96
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
+
+    comparative_operator           shift and go to state 90
+    arithmetic_operator            shift and go to state 55
+
+state 80
+
+    (66) logic_expression -> IDENTIFIER .
+    (63) arithmetic_expression -> IDENTIFIER .
+
+  ! reduce/reduce conflict for ) resolved using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    AND             reduce using rule 66 (logic_expression -> IDENTIFIER .)
+    OR              reduce using rule 66 (logic_expression -> IDENTIFIER .)
+    GT              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    LT              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    GE              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    LE              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    EQUAL           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    PLUS            reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    MINUS           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    TIMES           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    DIVISION        reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    MODULO          reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    )               reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+
+  ! )               [ reduce using rule 66 (logic_expression -> IDENTIFIER .) ]
+
+
+state 81
+
+    (71) arithmetic_literal -> REAL .
+
+    GT              reduce using rule 71 (arithmetic_literal -> REAL .)
+    LT              reduce using rule 71 (arithmetic_literal -> REAL .)
+    GE              reduce using rule 71 (arithmetic_literal -> REAL .)
+    LE              reduce using rule 71 (arithmetic_literal -> REAL .)
+    EQUAL           reduce using rule 71 (arithmetic_literal -> REAL .)
+    NOT_EQUAL       reduce using rule 71 (arithmetic_literal -> REAL .)
+    PLUS            reduce using rule 71 (arithmetic_literal -> REAL .)
+    MINUS           reduce using rule 71 (arithmetic_literal -> REAL .)
+    TIMES           reduce using rule 71 (arithmetic_literal -> REAL .)
+    DIVISION        reduce using rule 71 (arithmetic_literal -> REAL .)
+    MODULO          reduce using rule 71 (arithmetic_literal -> REAL .)
+    END             reduce using rule 71 (arithmetic_literal -> REAL .)
+    )               reduce using rule 71 (arithmetic_literal -> REAL .)
+    COMMA           reduce using rule 71 (arithmetic_literal -> REAL .)
+
+
+state 82
+
+    (72) arithmetic_literal -> INTEGER .
+
+    GT              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    LT              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    GE              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    LE              reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    EQUAL           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    NOT_EQUAL       reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    PLUS            reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    MINUS           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    TIMES           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    DIVISION        reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    MODULO          reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    END             reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    )               reduce using rule 72 (arithmetic_literal -> INTEGER .)
+    COMMA           reduce using rule 72 (arithmetic_literal -> INTEGER .)
+
+
+state 83
+
+    (11) if_conditional -> IF ( logic_expression ) . OPEN_SCOPE
+
+    OPEN_SCOPE      shift and go to state 112
+
+
+state 84
+
+    (10) loop -> WHILE ( logic_expression ) . OPEN_SCOPE
+
+    OPEN_SCOPE      shift and go to state 113
+
+
+state 85
+
+    (64) arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .
+    (64) arithmetic_expression -> arithmetic_expression . arithmetic_operator arithmetic_expression
+    (14) arithmetic_operator -> . PLUS
+    (15) arithmetic_operator -> . MINUS
+    (16) arithmetic_operator -> . TIMES
+    (17) arithmetic_operator -> . DIVISION
+    (18) arithmetic_operator -> . MODULO
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVISION resolved as shift
+  ! shift/reduce conflict for MODULO resolved as shift
+    END             reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    )               reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    GT              reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    LT              reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    GE              reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    LE              reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    EQUAL           reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    NOT_EQUAL       reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    COMMA           reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .)
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
+
+  ! PLUS            [ reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .) ]
+  ! MINUS           [ reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .) ]
+  ! TIMES           [ reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .) ]
+  ! DIVISION        [ reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .) ]
+  ! MODULO          [ reduce using rule 64 (arithmetic_expression -> arithmetic_expression arithmetic_operator arithmetic_expression .) ]
+
+    arithmetic_operator            shift and go to state 55
+
+state 86
+
+    (62) arithmetic_expression -> ( . arithmetic_expression )
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+
+    (               shift and go to state 86
+    IDENTIFIER      shift and go to state 87
+    REAL            shift and go to state 81
+    INTEGER         shift and go to state 82
+
+    arithmetic_expression          shift and go to state 114
+    arithmetic_literal             shift and go to state 34
+
+state 87
+
+    (63) arithmetic_expression -> IDENTIFIER .
+
+    PLUS            reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    MINUS           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    TIMES           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    DIVISION        reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    MODULO          reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    END             reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    )               reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    GT              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    LT              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    GE              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    LE              reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    EQUAL           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+    COMMA           reduce using rule 63 (arithmetic_expression -> IDENTIFIER .)
+
+
+state 88
+
+    (69) logic_expression -> logic_expression binary_logic_operator logic_expression .
+    (69) logic_expression -> logic_expression . binary_logic_operator logic_expression
+    (19) binary_logic_operator -> . AND
+    (20) binary_logic_operator -> . OR
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    END             reduce using rule 69 (logic_expression -> logic_expression binary_logic_operator logic_expression .)
+    )               reduce using rule 69 (logic_expression -> logic_expression binary_logic_operator logic_expression .)
+    COMMA           reduce using rule 69 (logic_expression -> logic_expression binary_logic_operator logic_expression .)
+    AND             shift and go to state 62
+    OR              shift and go to state 63
+
+  ! AND             [ reduce using rule 69 (logic_expression -> logic_expression binary_logic_operator logic_expression .) ]
+  ! OR              [ reduce using rule 69 (logic_expression -> logic_expression binary_logic_operator logic_expression .) ]
+
+    binary_logic_operator          shift and go to state 61
+
+state 89
+
+    (62) arithmetic_expression -> ( arithmetic_expression ) .
+
+    PLUS            reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    MINUS           reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    TIMES           reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    DIVISION        reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    MODULO          reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    END             reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    )               reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    GT              reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    LT              reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    GE              reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    LE              reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    EQUAL           reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    NOT_EQUAL       reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+    COMMA           reduce using rule 62 (arithmetic_expression -> ( arithmetic_expression ) .)
+
+
+state 90
+
+    (68) logic_expression -> ( arithmetic_expression comparative_operator . arithmetic_expression )
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+
+    (               shift and go to state 86
+    IDENTIFIER      shift and go to state 87
+    REAL            shift and go to state 81
+    INTEGER         shift and go to state 82
+
+    arithmetic_expression          shift and go to state 115
+    arithmetic_literal             shift and go to state 34
+
+state 91
+
+    (22) comparative_operator -> GT .
+
+    (               reduce using rule 22 (comparative_operator -> GT .)
+    IDENTIFIER      reduce using rule 22 (comparative_operator -> GT .)
+    REAL            reduce using rule 22 (comparative_operator -> GT .)
+    INTEGER         reduce using rule 22 (comparative_operator -> GT .)
+
+
+state 92
+
+    (23) comparative_operator -> LT .
+
+    (               reduce using rule 23 (comparative_operator -> LT .)
+    IDENTIFIER      reduce using rule 23 (comparative_operator -> LT .)
+    REAL            reduce using rule 23 (comparative_operator -> LT .)
+    INTEGER         reduce using rule 23 (comparative_operator -> LT .)
+
+
+state 93
+
+    (24) comparative_operator -> GE .
+
+    (               reduce using rule 24 (comparative_operator -> GE .)
+    IDENTIFIER      reduce using rule 24 (comparative_operator -> GE .)
+    REAL            reduce using rule 24 (comparative_operator -> GE .)
+    INTEGER         reduce using rule 24 (comparative_operator -> GE .)
+
+
+state 94
+
+    (25) comparative_operator -> LE .
+
+    (               reduce using rule 25 (comparative_operator -> LE .)
+    IDENTIFIER      reduce using rule 25 (comparative_operator -> LE .)
+    REAL            reduce using rule 25 (comparative_operator -> LE .)
+    INTEGER         reduce using rule 25 (comparative_operator -> LE .)
+
+
+state 95
+
+    (26) comparative_operator -> EQUAL .
+
+    (               reduce using rule 26 (comparative_operator -> EQUAL .)
+    IDENTIFIER      reduce using rule 26 (comparative_operator -> EQUAL .)
+    REAL            reduce using rule 26 (comparative_operator -> EQUAL .)
+    INTEGER         reduce using rule 26 (comparative_operator -> EQUAL .)
+
+
+state 96
+
+    (27) comparative_operator -> NOT_EQUAL .
+
+    (               reduce using rule 27 (comparative_operator -> NOT_EQUAL .)
+    IDENTIFIER      reduce using rule 27 (comparative_operator -> NOT_EQUAL .)
+    REAL            reduce using rule 27 (comparative_operator -> NOT_EQUAL .)
+    INTEGER         reduce using rule 27 (comparative_operator -> NOT_EQUAL .)
+
+
+state 97
+
+    (67) logic_expression -> ( logic_expression ) .
+
+    AND             reduce using rule 67 (logic_expression -> ( logic_expression ) .)
+    OR              reduce using rule 67 (logic_expression -> ( logic_expression ) .)
+    END             reduce using rule 67 (logic_expression -> ( logic_expression ) .)
+    )               reduce using rule 67 (logic_expression -> ( logic_expression ) .)
+    COMMA           reduce using rule 67 (logic_expression -> ( logic_expression ) .)
+
+
+state 98
+
+    (32) note -> ( REAL COMMA . REAL COMMA INTEGER )
+
+    REAL            shift and go to state 116
+
+
+state 99
+
+    (36) chord -> ( INTEGER COMMA . INTEGER COMMA INTEGER )
+
+    INTEGER         shift and go to state 117
+
+
+state 100
+
+    (32) note -> ( . REAL COMMA REAL COMMA INTEGER )
+
+    REAL            shift and go to state 118
+
+
+state 101
+
+    (42) music -> ( [ note_list . ] COMMA REAL )
+    (41) note_list -> note_list . COMMA note
+
+    ]               shift and go to state 119
+    COMMA           shift and go to state 120
+
+
+state 102
+
+    (43) music -> ( [ ] . COMMA REAL )
+
+    COMMA           shift and go to state 121
+
+
+state 103
+
+    (40) note_list -> note .
+
+    ]               reduce using rule 40 (note_list -> note .)
+    COMMA           reduce using rule 40 (note_list -> note .)
+
+
+state 104
+
+    (58) builtin_functions -> PREDEFINED_IDENTIFIER ( params_list . )
+    (60) params_list -> params_list . COMMA expression
+
+    )               shift and go to state 122
+    COMMA           shift and go to state 123
+
+
+state 105
+
+    (59) params_list -> expression .
+
+    )               reduce using rule 59 (params_list -> expression .)
+    COMMA           reduce using rule 59 (params_list -> expression .)
+
+
+state 106
+
+    (35) scale -> [ integer_list ] .
+
+    END             reduce using rule 35 (scale -> [ integer_list ] .)
+    )               reduce using rule 35 (scale -> [ integer_list ] .)
+    COMMA           reduce using rule 35 (scale -> [ integer_list ] .)
+
+
+state 107
+
+    (34) integer_list -> integer_list COMMA . INTEGER
+
+    INTEGER         shift and go to state 124
+
+
+state 108
+
+    (39) harmonic_field -> [ chord_list ] .
+
+    END             reduce using rule 39 (harmonic_field -> [ chord_list ] .)
+    )               reduce using rule 39 (harmonic_field -> [ chord_list ] .)
+    COMMA           reduce using rule 39 (harmonic_field -> [ chord_list ] .)
+
+
+state 109
+
+    (38) chord_list -> chord_list COMMA . chord
+    (36) chord -> . ( INTEGER COMMA INTEGER COMMA INTEGER )
+
+    (               shift and go to state 76
+
+    chord                          shift and go to state 125
+
+state 110
+
+    (36) chord -> ( INTEGER . COMMA INTEGER COMMA INTEGER )
+
+    COMMA           shift and go to state 99
+
+
+state 111
+
+    (68) logic_expression -> ( arithmetic_expression . comparative_operator arithmetic_expression )
+    (62) arithmetic_expression -> ( arithmetic_expression . )
+    (64) arithmetic_expression -> arithmetic_expression . arithmetic_operator arithmetic_expression
+    (22) comparative_operator -> . GT
+    (23) comparative_operator -> . LT
+    (24) comparative_operator -> . GE
+    (25) comparative_operator -> . LE
+    (26) comparative_operator -> . EQUAL
+    (27) comparative_operator -> . NOT_EQUAL
+    (14) arithmetic_operator -> . PLUS
+    (15) arithmetic_operator -> . MINUS
+    (16) arithmetic_operator -> . TIMES
+    (17) arithmetic_operator -> . DIVISION
+    (18) arithmetic_operator -> . MODULO
+
+    )               shift and go to state 89
+    GT              shift and go to state 91
+    LT              shift and go to state 92
+    GE              shift and go to state 93
+    LE              shift and go to state 94
+    EQUAL           shift and go to state 95
+    NOT_EQUAL       shift and go to state 96
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
+
+    comparative_operator           shift and go to state 90
+    arithmetic_operator            shift and go to state 55
+
+state 112
+
+    (11) if_conditional -> IF ( logic_expression ) OPEN_SCOPE .
+
+    OPEN_SCOPE      reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    END_SCOPE       reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    VARIABLE_TYPE   reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    IDENTIFIER      reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    REGISTER        reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    IF              reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    WHILE           reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    $end            reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+    END             reduce using rule 11 (if_conditional -> IF ( logic_expression ) OPEN_SCOPE .)
+
+
+state 113
+
+    (10) loop -> WHILE ( logic_expression ) OPEN_SCOPE .
+
+    OPEN_SCOPE      reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    END_SCOPE       reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    VARIABLE_TYPE   reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    IDENTIFIER      reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    REGISTER        reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    IF              reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    WHILE           reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    $end            reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+    END             reduce using rule 10 (loop -> WHILE ( logic_expression ) OPEN_SCOPE .)
+
+
+state 114
+
+    (62) arithmetic_expression -> ( arithmetic_expression . )
+    (64) arithmetic_expression -> arithmetic_expression . arithmetic_operator arithmetic_expression
+    (14) arithmetic_operator -> . PLUS
+    (15) arithmetic_operator -> . MINUS
+    (16) arithmetic_operator -> . TIMES
+    (17) arithmetic_operator -> . DIVISION
+    (18) arithmetic_operator -> . MODULO
+
+    )               shift and go to state 89
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
+
+    arithmetic_operator            shift and go to state 55
+
+state 115
+
+    (68) logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression . )
+    (64) arithmetic_expression -> arithmetic_expression . arithmetic_operator arithmetic_expression
+    (14) arithmetic_operator -> . PLUS
+    (15) arithmetic_operator -> . MINUS
+    (16) arithmetic_operator -> . TIMES
+    (17) arithmetic_operator -> . DIVISION
+    (18) arithmetic_operator -> . MODULO
+
+    )               shift and go to state 126
+    PLUS            shift and go to state 56
+    MINUS           shift and go to state 57
+    TIMES           shift and go to state 58
+    DIVISION        shift and go to state 59
+    MODULO          shift and go to state 60
+
+    arithmetic_operator            shift and go to state 55
+
+state 116
+
+    (32) note -> ( REAL COMMA REAL . COMMA INTEGER )
+
+    COMMA           shift and go to state 127
+
+
+state 117
+
+    (36) chord -> ( INTEGER COMMA INTEGER . COMMA INTEGER )
+
+    COMMA           shift and go to state 128
+
+
+state 118
+
+    (32) note -> ( REAL . COMMA REAL COMMA INTEGER )
+
+    COMMA           shift and go to state 98
+
+
+state 119
+
+    (42) music -> ( [ note_list ] . COMMA REAL )
+
+    COMMA           shift and go to state 129
+
+
+state 120
+
+    (41) note_list -> note_list COMMA . note
+    (32) note -> . ( REAL COMMA REAL COMMA INTEGER )
+
+    (               shift and go to state 100
+
+    note                           shift and go to state 130
+
+state 121
+
+    (43) music -> ( [ ] COMMA . REAL )
+
+    REAL            shift and go to state 131
+
+
+state 122
+
+    (58) builtin_functions -> PREDEFINED_IDENTIFIER ( params_list ) .
+
+    END             reduce using rule 58 (builtin_functions -> PREDEFINED_IDENTIFIER ( params_list ) .)
+    )               reduce using rule 58 (builtin_functions -> PREDEFINED_IDENTIFIER ( params_list ) .)
+    COMMA           reduce using rule 58 (builtin_functions -> PREDEFINED_IDENTIFIER ( params_list ) .)
+
+
+state 123
+
+    (60) params_list -> params_list COMMA . expression
+    (54) expression -> . arithmetic_expression
+    (55) expression -> . logic_expression
+    (56) expression -> . literal
+    (57) expression -> . builtin_functions
+    (61) arithmetic_expression -> . arithmetic_literal
+    (62) arithmetic_expression -> . ( arithmetic_expression )
+    (63) arithmetic_expression -> . IDENTIFIER
+    (64) arithmetic_expression -> . arithmetic_expression arithmetic_operator arithmetic_expression
+    (65) logic_expression -> . BOOLEAN
+    (66) logic_expression -> . IDENTIFIER
+    (67) logic_expression -> . ( logic_expression )
+    (68) logic_expression -> . ( arithmetic_expression comparative_operator arithmetic_expression )
+    (69) logic_expression -> . logic_expression binary_logic_operator logic_expression
+    (70) logic_expression -> . unary_logic_operator logic_expression
+    (46) literal -> . INTEGER
+    (47) literal -> . REAL
+    (48) literal -> . BOOLEAN
+    (49) literal -> . note
+    (50) literal -> . scale
+    (51) literal -> . chord
+    (52) literal -> . harmonic_field
+    (53) literal -> . music
+    (58) builtin_functions -> . PREDEFINED_IDENTIFIER ( params_list )
+    (71) arithmetic_literal -> . REAL
+    (72) arithmetic_literal -> . INTEGER
+    (21) unary_logic_operator -> . NOT
+    (32) note -> . ( REAL COMMA REAL COMMA INTEGER )
+    (35) scale -> . [ integer_list ]
+    (36) chord -> . ( INTEGER COMMA INTEGER COMMA INTEGER )
+    (39) harmonic_field -> . [ chord_list ]
+    (42) music -> . ( [ note_list ] COMMA REAL )
+    (43) music -> . ( [ ] COMMA REAL )
+
+    (               shift and go to state 35
+    IDENTIFIER      shift and go to state 28
+    BOOLEAN         shift and go to state 36
+    INTEGER         shift and go to state 38
+    REAL            shift and go to state 39
+    PREDEFINED_IDENTIFIER shift and go to state 45
+    NOT             shift and go to state 46
+    [               shift and go to state 47
+
+    expression                     shift and go to state 132
+    arithmetic_expression          shift and go to state 30
+    logic_expression               shift and go to state 31
+    literal                        shift and go to state 32
+    builtin_functions              shift and go to state 33
+    arithmetic_literal             shift and go to state 34
+    unary_logic_operator           shift and go to state 37
+    note                           shift and go to state 40
+    scale                          shift and go to state 41
+    chord                          shift and go to state 42
+    harmonic_field                 shift and go to state 43
+    music                          shift and go to state 44
+
+state 124
+
+    (34) integer_list -> integer_list COMMA INTEGER .
+
+    ]               reduce using rule 34 (integer_list -> integer_list COMMA INTEGER .)
+    COMMA           reduce using rule 34 (integer_list -> integer_list COMMA INTEGER .)
+
+
+state 125
+
+    (38) chord_list -> chord_list COMMA chord .
+
+    ]               reduce using rule 38 (chord_list -> chord_list COMMA chord .)
+    COMMA           reduce using rule 38 (chord_list -> chord_list COMMA chord .)
+
+
+state 126
+
+    (68) logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression ) .
+
+    AND             reduce using rule 68 (logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression ) .)
+    OR              reduce using rule 68 (logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression ) .)
+    END             reduce using rule 68 (logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression ) .)
+    )               reduce using rule 68 (logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression ) .)
+    COMMA           reduce using rule 68 (logic_expression -> ( arithmetic_expression comparative_operator arithmetic_expression ) .)
+
+
+state 127
+
+    (32) note -> ( REAL COMMA REAL COMMA . INTEGER )
+
+    INTEGER         shift and go to state 133
+
+
+state 128
+
+    (36) chord -> ( INTEGER COMMA INTEGER COMMA . INTEGER )
+
+    INTEGER         shift and go to state 134
+
+
+state 129
+
+    (42) music -> ( [ note_list ] COMMA . REAL )
+
+    REAL            shift and go to state 135
+
+
+state 130
+
+    (41) note_list -> note_list COMMA note .
+
+    ]               reduce using rule 41 (note_list -> note_list COMMA note .)
+    COMMA           reduce using rule 41 (note_list -> note_list COMMA note .)
+
+
+state 131
+
+    (43) music -> ( [ ] COMMA REAL . )
+
+    )               shift and go to state 136
+
+
+state 132
+
+    (60) params_list -> params_list COMMA expression .
+
+    )               reduce using rule 60 (params_list -> params_list COMMA expression .)
+    COMMA           reduce using rule 60 (params_list -> params_list COMMA expression .)
+
+
+state 133
+
+    (32) note -> ( REAL COMMA REAL COMMA INTEGER . )
+
+    )               shift and go to state 137
+
+
+state 134
+
+    (36) chord -> ( INTEGER COMMA INTEGER COMMA INTEGER . )
+
+    )               shift and go to state 138
+
+
+state 135
+
+    (42) music -> ( [ note_list ] COMMA REAL . )
+
+    )               shift and go to state 139
+
+
+state 136
+
+    (43) music -> ( [ ] COMMA REAL ) .
+
+    END             reduce using rule 43 (music -> ( [ ] COMMA REAL ) .)
+    )               reduce using rule 43 (music -> ( [ ] COMMA REAL ) .)
+    COMMA           reduce using rule 43 (music -> ( [ ] COMMA REAL ) .)
+
+
+state 137
+
+    (32) note -> ( REAL COMMA REAL COMMA INTEGER ) .
+
+    END             reduce using rule 32 (note -> ( REAL COMMA REAL COMMA INTEGER ) .)
+    )               reduce using rule 32 (note -> ( REAL COMMA REAL COMMA INTEGER ) .)
+    ]               reduce using rule 32 (note -> ( REAL COMMA REAL COMMA INTEGER ) .)
+    COMMA           reduce using rule 32 (note -> ( REAL COMMA REAL COMMA INTEGER ) .)
+
+
+state 138
+
+    (36) chord -> ( INTEGER COMMA INTEGER COMMA INTEGER ) .
+
+    END             reduce using rule 36 (chord -> ( INTEGER COMMA INTEGER COMMA INTEGER ) .)
+    )               reduce using rule 36 (chord -> ( INTEGER COMMA INTEGER COMMA INTEGER ) .)
+    ]               reduce using rule 36 (chord -> ( INTEGER COMMA INTEGER COMMA INTEGER ) .)
+    COMMA           reduce using rule 36 (chord -> ( INTEGER COMMA INTEGER COMMA INTEGER ) .)
+
+
+state 139
+
+    (42) music -> ( [ note_list ] COMMA REAL ) .
+
+    END             reduce using rule 42 (music -> ( [ note_list ] COMMA REAL ) .)
+    )               reduce using rule 42 (music -> ( [ note_list ] COMMA REAL ) .)
+    COMMA           reduce using rule 42 (music -> ( [ note_list ] COMMA REAL ) .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for AND in state 70 resolved as shift
+WARNING: shift/reduce conflict for OR in state 70 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 85 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 85 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 85 resolved as shift
+WARNING: shift/reduce conflict for DIVISION in state 85 resolved as shift
+WARNING: shift/reduce conflict for MODULO in state 85 resolved as shift
+WARNING: shift/reduce conflict for AND in state 88 resolved as shift
+WARNING: shift/reduce conflict for OR in state 88 resolved as shift
+WARNING: reduce/reduce conflict in state 28 resolved using rule (arithmetic_expression -> IDENTIFIER)
+WARNING: rejected rule (logic_expression -> IDENTIFIER) in state 28
+WARNING: reduce/reduce conflict in state 36 resolved using rule (literal -> BOOLEAN)
+WARNING: rejected rule (logic_expression -> BOOLEAN) in state 36
+WARNING: reduce/reduce conflict in state 38 resolved using rule (literal -> INTEGER)
+WARNING: rejected rule (arithmetic_literal -> INTEGER) in state 38
+WARNING: reduce/reduce conflict in state 39 resolved using rule (literal -> REAL)
+WARNING: rejected rule (arithmetic_literal -> REAL) in state 39
+WARNING: reduce/reduce conflict in state 80 resolved using rule (arithmetic_expression -> IDENTIFIER)
+WARNING: rejected rule (logic_expression -> IDENTIFIER) in state 80

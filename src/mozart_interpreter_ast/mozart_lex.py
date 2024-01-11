@@ -1,6 +1,6 @@
 from ply import *
 
-literals = ["=", "(", ")", "[", "]"]
+literals = ["=", "(", ")", "[", "]", "{", "}"]
 
 tokens = (
     "PLUS",
@@ -28,8 +28,6 @@ tokens = (
     "PREDEFINED_IDENTIFIER",
     "END",
     "COMMA",
-    "OPEN_SCOPE",
-    "END_SCOPE",
     "WHILE")
 
 # Operators
@@ -67,18 +65,6 @@ def t_ELSE(t):
 
 def t_WHILE(t):
     r'while'
-    return t
-
-
-def t_END_SCOPE(t):
-    r'}'
-    t.value = "END_SCOPE"
-    return t
-
-
-def t_OPEN_SCOPE(t):
-    r'{'
-    t.value = "OPEN_SCOPE"
     return t
 
 
