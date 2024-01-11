@@ -42,32 +42,32 @@ class ModuloZero(Exception):
 class MozartInterpreter:
     def __init__(self):
         self.evaluation_mapper = {
-            # ASTNodeType.IF: self.__evaluate_if,
-            # ASTNodeType.LOOP: self.__evaluate_loop,
-            # ASTNodeType.COMMAND: self.__evaluate_command,
-            # ASTNodeType.REGISTER: self.__evaluate_register,
-            # ASTNodeType.VARIABLE_ATTRIBUTION: self.__evaluate_variable_attribution,
-            # ASTNodeType.VARIABLE_DECLARATION: self.__evaluate_variable_declaration,
-            # ASTNodeType.ARITHMETIC_EXPRESSION: self.__evaluate_arithmetic_expression,
-            # ASTNodeType.ARITHMETIC_LITERAL: self.__evaluate_arithmetic_literal,
-            # ASTNodeType.ARITHMETIC_OPERATOR: self.__evaluate_arithmetic_operator,
-            # ASTNodeType.BINARY_LOGIC_OPERATOR: self.__evaluate_binary_logic_operator,
-            # ASTNodeType.BUILTIN_FUNCTIONS: self.__evaluate_builtin_functions,
-            # ASTNodeType.CHORD: self.__evaluate_chord,
-            # ASTNodeType.CHORD_LIST: self.__evaluate_chord_list,
-            # ASTNodeType.COMPARATIVE_OPERATOR: self.__evaluate_comparative_operator,
-            # ASTNodeType.EXPRESSION: self.__evaluate_expression,
-            # ASTNodeType.HARMONIC_FIELD: self.__evaluate_harmonic_field,
-            # ASTNodeType.IFELSE: self.__evaluate_ifelse,
-            # ASTNodeType.LITERAL: self.__evaluate_literal,
+            ASTNodeType.IF: self.__evaluate_if,
+            ASTNodeType.LOOP: self.__evaluate_loop,
+            ASTNodeType.COMMAND: self.__evaluate_command,
+            ASTNodeType.REGISTER: self.__evaluate_register,
+            ASTNodeType.VARIABLE_ATTRIBUTION: self.__evaluate_variable_attribution,
+            ASTNodeType.VARIABLE_DECLARATION: self.__evaluate_variable_declaration,
+            ASTNodeType.ARITHMETIC_EXPRESSION: self.__evaluate_arithmetic_expression,
+            ASTNodeType.ARITHMETIC_LITERAL: self.__evaluate_arithmetic_literal,
+            ASTNodeType.ARITHMETIC_OPERATOR: self.__evaluate_arithmetic_operator,
+            ASTNodeType.BINARY_LOGIC_OPERATOR: self.__evaluate_binary_logic_operator,
+            ASTNodeType.BUILTIN_FUNCTIONS: self.__evaluate_builtin_functions,
+            ASTNodeType.CHORD: self.__evaluate_chord,
+            ASTNodeType.CHORD_LIST: self.__evaluate_chord_list,
+            ASTNodeType.COMPARATIVE_OPERATOR: self.__evaluate_comparative_operator,
+            ASTNodeType.EXPRESSION: self.__evaluate_expression,
+            ASTNodeType.HARMONIC_FIELD: self.__evaluate_harmonic_field,
+            ASTNodeType.IFELSE: self.__evaluate_ifelse,
+            ASTNodeType.LITERAL: self.__evaluate_literal,
             ASTNodeType.LOGIC_EXPRESSION: self.__evaluate_logic_expression,
-            # ASTNodeType.MUSIC: self.__evaluate_music,
-            # ASTNodeType.NOTE: self.__evaluate_note,
-            # ASTNodeType.NOTE_LIST: self.__evaluate_note_list,
+            ASTNodeType.MUSIC: self.__evaluate_music,
+            ASTNodeType.NOTE: self.__evaluate_note,
+            ASTNodeType.NOTE_LIST: self.__evaluate_note_list,
             ASTNodeType.PARAMS_LIST: self.__evaluate_params_list,
-            # ASTNodeType.SCALE: self.__evaluate_scale,
-            # ASTNodeType.INTEGER_LIST: self.__evaluate_integer_list,
-            # ASTNodeType.UNARY_LOGIC_OPERATOR: self.__evaluate_unary_logic_operator,
+            ASTNodeType.SCALE: self.__evaluate_scale,
+            ASTNodeType.INTEGER_LIST: self.__evaluate_integer_list,
+            ASTNodeType.UNARY_LOGIC_OPERATOR: self.__evaluate_unary_logic_operator,
         }
 
         self.arithmetic_operation = {
@@ -76,6 +76,21 @@ class MozartInterpreter:
             "*": self.multiply,
             "/": self.divide,
             "%": self.modulos
+        }
+
+        self.logic_operations = {
+            "!": self.mozart_not,
+            "and": self.mozart_and,
+            "or": self.mozart_or
+        }
+
+        self.comparative_operations = {
+            ">": self.gt,
+            "<": self.lt,
+            ">=": self.ge,
+            "<=": self.le,
+            "==": self.et,
+            "!=": self.ne
         }
 
         self.mozart_builtin_functions_mapper = {
@@ -91,6 +106,42 @@ class MozartInterpreter:
         ast = mozart_parser.parse(code)
         # Semantic Analysis and Interpretation
         self.__interpret_ast(ast)
+
+    @staticmethod
+    def mozart_not(value: bool):
+        return not value
+
+    @staticmethod
+    def mozart_and(a, b):
+        return a and b
+
+    @staticmethod
+    def mozart_or(a, b):
+        return a or b
+
+    @staticmethod
+    def gt(a, b):
+        return a > b
+
+    @staticmethod
+    def lt(a, b):
+        return a < b
+
+    @staticmethod
+    def ge(a, b):
+        return a >= b
+
+    @staticmethod
+    def le(a, b):
+        return a <= b
+
+    @staticmethod
+    def et(a, b):
+        return a == b
+
+    @staticmethod
+    def ne(a, b):
+        return a != b
 
     @staticmethod
     def sum(a, b):
@@ -227,11 +278,10 @@ class MozartInterpreter:
     def __evaluate_chord(node: ASTNode, program_state):
         return ValueType.CHORD, node.value
 
-    @staticmethod
-    def __evaluate_chord_list(node: ASTNode, program_state):
+    def __evaluate_chord_list(self, node: ASTNode, program_state):
         chord_list = []
         for chord in node.value:
-            chord_list.append(chord)
+            chord_list.append(self.__evaluate_chord(chord, program_state))
         return ValueType.CHORD_LIST, chord_list
 
     @staticmethod
@@ -282,10 +332,37 @@ class MozartInterpreter:
         return ValueType.MUSIC, (note_list, node.value[1])
 
     def __evaluate_params_list(self, node: ASTNode, program_state):
-        pass
+        params_list = []
+        for param in node.value:
+            params_list.append(self.__evaluate_expression(param, program_state))
+        return params_list
 
     def __evaluate_logic_expression(self, node: ASTNode, program_state):
-        pass
+        if len(node.children) == 0:
+            if node.value_type == ValueType.BOOLEAN:
+                return ValueType.BOOLEAN, node.value
+
+            if node.value_type == ValueType.IDENTIFIER:
+                return program_state(node.value)
+
+        if len(node.children) == 1:
+            return self.__evaluate_logic_expression(node.children[0], program_state)
+
+        if len(node.children) == 2:
+            return self.logic_operations[node.value[0]](node.value[2])
+
+        if len(node.children) == 3:
+            if node.children[0].type == ASTNodeType.ARITHMETIC_EXPRESSION:
+                value_type_a, value_a = self.__evaluate_arithmetic_expression(node.children[0], program_state)
+                operator = self.__evaluate_comparative_operator(node.children[1], program_state)
+                value_type_b, value_b = self.__evaluate_arithmetic_expression(node.children[2], program_state)
+                self.comparative_operations[operator](value_a, value_b)
+
+            if node.children[0].type == ASTNodeType.LOGIC_EXPRESSION:
+                value_type_a, value_a = self.__evaluate_logic_expression(node.children[0], program_state)
+                operator = self.__evaluate_binary_logic_operator(node.children[1], program_state)
+                value_type_b, value_b = self.__evaluate_logic_expression(node.children[2], program_state)
+                self.logic_operations[operator](value_a, value_b)
 
 
 path = "../../data/mozart_code_examples/example_1.mozart"

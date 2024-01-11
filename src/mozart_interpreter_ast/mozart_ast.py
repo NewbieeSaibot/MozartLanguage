@@ -15,6 +15,7 @@ class ValueType(Enum):
     NOTE_LIST = 8
     SCALE = 9
     INTEGER_LIST = 10
+    MUSIC = 11
 
 
 class ASTNodeType(Enum):
