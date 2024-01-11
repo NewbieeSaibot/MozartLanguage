@@ -73,15 +73,15 @@ def t_WHILE(t):
 def t_BOOLEAN(t):
     r'(True|False)'
     if str(t.value) == "True":
-        t.value = (ValueType.BOOLEAN, True)
+        t.value = True
     else:
-        t.value = (ValueType.BOOLEAN, False)
+        t.value = False
     return t
 
 
 def t_REAL(t):
     '-?[1-9][0-9]*.[0-9]+'
-    t.value = (ValueType.REAL, float(t.value))
+    t.value = float(t.value)
     return t
 
 
@@ -103,9 +103,9 @@ def t_INTEGER(t):
             pitch_value += 1
 
         pitch_value += int(str(t.value)[-1]) * 12
-        t.value = (ValueType.INTEGER, pitch_value)
+        t.value = pitch_value + 9
     else:
-        t.value = (ValueType.INTEGER, int(t.value))
+        t.value = int(t.value)
     return t
 
 
@@ -116,6 +116,17 @@ def t_PREDEFINED_IDENTIFIER(t):
 
 def t_VARIABLE_TYPE(t):
     r'(boolean|integer|real|note|scale|chord|harmonic_field|music)'
+    name_to_variable_type_mapper = {
+        "boolean": ValueType.BOOLEAN,
+        "integer": ValueType.INTEGER,
+        "real": ValueType.REAL,
+        "note": ValueType.NOTE,
+        "scale": ValueType.SCALE,
+        "chord": ValueType.CHORD,
+        "harmonic_field": ValueType.HARMONIC_FIELD,
+        "music": ValueType.MUSIC
+    }
+    t.value = name_to_variable_type_mapper[t.value]
     return t
 
 

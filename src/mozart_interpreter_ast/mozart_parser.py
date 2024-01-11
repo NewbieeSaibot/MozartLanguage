@@ -144,7 +144,7 @@ def p_SCALE(p):
 
 def p_CHORD(p):
     r'chord : "(" INTEGER COMMA INTEGER COMMA INTEGER ")"'
-    p[0] = ASTNode(ASTNodeType.CHORD, children=[], value=(p[2], p[4], [6]))
+    p[0] = ASTNode(ASTNodeType.CHORD, children=[], value=(p[2], p[4], p[6]))
 
 
 def p_chord_list(p):
@@ -203,12 +203,19 @@ def p_literal_not_primitive(p):
     p[0] = ASTNode(ASTNodeType.LITERAL, children=[p[1]])
 
 
-def p_literal_primitive(p):
-    '''literal : INTEGER
-               | REAL
-               | BOOLEAN
-               '''
-    p[0] = ASTNode(ASTNodeType.LITERAL, children=[], value=p[1])
+def p_literal_primitive_integer(p):
+    r'literal : INTEGER'
+    p[0] = ASTNode(ASTNodeType.LITERAL, children=[], value=p[1], value_type=ValueType.INTEGER)
+
+
+def p_literal_primitive_real(p):
+    r'literal : REAL'
+    p[0] = ASTNode(ASTNodeType.LITERAL, children=[], value=p[1], value_type=ValueType.REAL)
+
+
+def p_literal_primitive_boolean(p):
+    r'literal : BOOLEAN'
+    p[0] = ASTNode(ASTNodeType.LITERAL, children=[], value=p[1], value_type=ValueType.BOOLEAN)
 
 
 def p_expression(p):
@@ -248,12 +255,12 @@ def p_params_list(p):
         p[0] = p[1]
 
 
-def p_arithmetic_expression_value(p):
+def p_arithmetic_expression_identifier(p):
     r'arithmetic_expression : IDENTIFIER'
     p[0] = ASTNode(ASTNodeType.ARITHMETIC_EXPRESSION, children=[], value=p[1], value_type=ValueType.IDENTIFIER)
 
 
-def p_arithmetic_expression_identifier(p):
+def p_arithmetic_expression_arithmetic_literal(p):
     r'arithmetic_expression : arithmetic_literal'
     p[0] = ASTNode(ASTNodeType.ARITHMETIC_EXPRESSION, children=[p[1]])
 
