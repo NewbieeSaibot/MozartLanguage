@@ -121,18 +121,6 @@ def p_comparative_operator(p):
     p[0] = ASTNode(ASTNodeType.COMPARATIVE_OPERATOR, [], value=p[1])
 
 
-def p_unary_operator(p):
-    '''unary_operator : unary_logic_operator'''
-    p[0] = ASTNode(ASTNodeType.UNARY_OPERATOR, [p[1]])
-
-
-def p_binary_operator(p):
-    '''binary_operator : arithmetic_operator
-                       | comparative_operator
-                       | binary_logic_operator'''
-    p[0] = ASTNode(ASTNodeType.BINARY_OPERATOR, [p[1]])
-
-
 # Builtin types
 def p_NOTE(p):
     r'note : "(" REAL COMMA REAL COMMA INTEGER ")"'

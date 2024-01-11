@@ -50,8 +50,7 @@ class MozartInterpreter:
             # ASTNodeType.ARITHMETIC_EXPRESSION: self.__evaluate_arithmetic_expression,
             # ASTNodeType.ARITHMETIC_LITERAL: self.__evaluate_arithmetic_literal,
             # ASTNodeType.ARITHMETIC_OPERATOR: self.__evaluate_arithmetic_operator,
-            ASTNodeType.BINARY_LOGIC_OPERATOR: self.__evaluate_binary_logic_operator,
-            ASTNodeType.BINARY_OPERATOR: self.__evaluate_binary_operator,
+            # ASTNodeType.BINARY_LOGIC_OPERATOR: self.__evaluate_binary_logic_operator,
             ASTNodeType.BUILTIN_FUNCTIONS: self.__evaluate_builtin_functions,
             ASTNodeType.CHORD: self.__evaluate_chord,
             ASTNodeType.CHORD_LIST: self.__evaluate_chord_list,
@@ -67,7 +66,6 @@ class MozartInterpreter:
             ASTNodeType.PARAMS_LIST: self.__evaluate_params_list,
             ASTNodeType.SCALE: self.__evaluate_scale,
             ASTNodeType.UNARY_LOGIC_OPERATOR: self.__evaluate_unary_logic_operator,
-            ASTNodeType.UNARY_OPERATOR: self.__evaluate_unary_operator,
         }
 
         self.arithmetic_operation = {
@@ -205,6 +203,13 @@ class MozartInterpreter:
     @staticmethod
     def __evaluate_arithmetic_operator(node: ASTNode, program_state):
         return node.value
+
+    @staticmethod
+    def __evaluate_binary_logic_operator(node: ASTNode, program_state):
+        return node.value
+
+    def __evaluate_builtin_functions(self, node: ASTNode, program_state):
+        pass
 
 
 path = "../../data/mozart_code_examples/example_1.mozart"
