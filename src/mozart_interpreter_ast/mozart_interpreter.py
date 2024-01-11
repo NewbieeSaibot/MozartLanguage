@@ -1,4 +1,5 @@
 import mozart_parser
+import mozart_builtin_functions
 from mozart_ast import ASTNode, ASTNodeType, ValueType
 
 
@@ -51,21 +52,22 @@ class MozartInterpreter:
             # ASTNodeType.ARITHMETIC_LITERAL: self.__evaluate_arithmetic_literal,
             # ASTNodeType.ARITHMETIC_OPERATOR: self.__evaluate_arithmetic_operator,
             # ASTNodeType.BINARY_LOGIC_OPERATOR: self.__evaluate_binary_logic_operator,
-            ASTNodeType.BUILTIN_FUNCTIONS: self.__evaluate_builtin_functions,
-            ASTNodeType.CHORD: self.__evaluate_chord,
-            ASTNodeType.CHORD_LIST: self.__evaluate_chord_list,
-            ASTNodeType.COMPARATIVE_OPERATOR: self.__evaluate_comparative_operator,
-            ASTNodeType.EXPRESSION: self.__evaluate_expression,
-            ASTNodeType.HARMONIC_FIELD: self.__evaluate_harmonic_field,
-            ASTNodeType.IFELSE: self.__evaluate_ifelse,
-            ASTNodeType.LITERAL: self.__evaluate_literal,
+            # ASTNodeType.BUILTIN_FUNCTIONS: self.__evaluate_builtin_functions,
+            # ASTNodeType.CHORD: self.__evaluate_chord,
+            # ASTNodeType.CHORD_LIST: self.__evaluate_chord_list,
+            # ASTNodeType.COMPARATIVE_OPERATOR: self.__evaluate_comparative_operator,
+            # ASTNodeType.EXPRESSION: self.__evaluate_expression,
+            # ASTNodeType.HARMONIC_FIELD: self.__evaluate_harmonic_field,
+            # ASTNodeType.IFELSE: self.__evaluate_ifelse,
+            # ASTNodeType.LITERAL: self.__evaluate_literal,
             ASTNodeType.LOGIC_EXPRESSION: self.__evaluate_logic_expression,
-            ASTNodeType.MUSIC: self.__evaluate_music,
-            ASTNodeType.NOTE: self.__evaluate_note,
-            ASTNodeType.NOTE_LIST: self.__evaluate_note_list,
+            # ASTNodeType.MUSIC: self.__evaluate_music,
+            # ASTNodeType.NOTE: self.__evaluate_note,
+            # ASTNodeType.NOTE_LIST: self.__evaluate_note_list,
             ASTNodeType.PARAMS_LIST: self.__evaluate_params_list,
-            ASTNodeType.SCALE: self.__evaluate_scale,
-            ASTNodeType.UNARY_LOGIC_OPERATOR: self.__evaluate_unary_logic_operator,
+            # ASTNodeType.SCALE: self.__evaluate_scale,
+            # ASTNodeType.INTEGER_LIST: self.__evaluate_integer_list,
+            # ASTNodeType.UNARY_LOGIC_OPERATOR: self.__evaluate_unary_logic_operator,
         }
 
         self.arithmetic_operation = {
@@ -74,6 +76,14 @@ class MozartInterpreter:
             "*": self.multiply,
             "/": self.divide,
             "%": self.modulos
+        }
+
+        self.mozart_builtin_functions_mapper = {
+            "belong": mozart_builtin_functions.belong,
+            "transpose": mozart_builtin_functions.transpose,
+            "get": mozart_builtin_functions.get,
+            "append_note": mozart_builtin_functions.append_note,
+            "append_chord": mozart_builtin_functions.append_chord
         }
 
     def run(self, code: str):
@@ -137,7 +147,7 @@ class MozartInterpreter:
 
     def __evaluate_register(self, node: ASTNode, program_state):
         # first child is a music
-        music = self.__evaluate_music(node.children[0], program_state)
+        value_type, music = self.__evaluate_music(node.children[0], program_state)
         fp = open("./generated_music.mus", "w", encoding="utf-8")
         fp.write(str(music))
         fp.close()
@@ -209,6 +219,72 @@ class MozartInterpreter:
         return node.value
 
     def __evaluate_builtin_functions(self, node: ASTNode, program_state):
+        # First child is the params list and the value is the predefined_identifier
+        params = self.__evaluate_params_list(node.children[0], program_state)
+        return self.mozart_builtin_functions_mapper[node.value](program_state, params)
+
+    @staticmethod
+    def __evaluate_chord(node: ASTNode, program_state):
+        return ValueType.CHORD, node.value
+
+    @staticmethod
+    def __evaluate_chord_list(node: ASTNode, program_state):
+        chord_list = []
+        for chord in node.value:
+            chord_list.append(chord)
+        return ValueType.CHORD_LIST, chord_list
+
+    @staticmethod
+    def __evaluate_comparative_operator(node: ASTNode, program_state):
+        return node.value
+
+    def __evaluate_expression(self, node: ASTNode, program_state):
+        return self.evaluation_mapper[node.children[0].type](node.children[0], program_state)
+
+    def __evaluate_harmonic_field(self, node: ASTNode, program_state):
+        chord_list = self.__evaluate_chord_list(node.children[0], program_state)
+        return ValueType.HARMONIC_FIELD, chord_list[1]
+
+    def __evaluate_ifelse(self, node: ASTNode, program_state):
+        # First child is the logic expression and the second is the command
+        if self.__evaluate_logic_expression(node.children[0], program_state):
+            program_state = self.__evaluate_command(node.children[1], program_state)
+        else:
+            program_state = self.__evaluate_command(node.children[2], program_state)
+
+        return program_state
+
+    def __evaluate_literal(self, node: ASTNode, program_state):
+        return self.evaluation_mapper[node.children[0].type](node.children[0], program_state)
+
+    @staticmethod
+    def __evaluate_unary_logic_operator(node: ASTNode, program_state):
+        return node.value
+
+    @staticmethod
+    def __evaluate_note(node: ASTNode, program_state):
+        return ValueType.NOTE, node.value
+
+    @staticmethod
+    def __evaluate_note_list(node: ASTNode, program_state):
+        return ValueType.NOTE_LIST, node.value
+
+    def __evaluate_scale(self, node: ASTNode, program_state):
+        value_type, value = self.__evaluate_integer_list(node.children[0], program_state)
+        return ValueType.SCALE, value
+
+    @staticmethod
+    def __evaluate_integer_list(node: ASTNode, program_state):
+        return ValueType.INTEGER_LIST, node.value
+
+    def __evaluate_music(self, node: ASTNode, program_state):
+        note_list = self.__evaluate_note_list(node.value[0], program_state)
+        return ValueType.MUSIC, (note_list, node.value[1])
+
+    def __evaluate_params_list(self, node: ASTNode, program_state):
+        pass
+
+    def __evaluate_logic_expression(self, node: ASTNode, program_state):
         pass
 
 

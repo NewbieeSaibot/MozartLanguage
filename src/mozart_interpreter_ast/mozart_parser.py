@@ -131,7 +131,7 @@ def p_INTEGER_LIST(p):
     '''integer_list : INTEGER
                     | integer_list COMMA INTEGER'''
     if len(p) == 2:
-        p[0] = ASTNode(ASTNodeType.NOTE, [], value=[p[1]])
+        p[0] = ASTNode(ASTNodeType.INTEGER_LIST, [], value=[p[1]])
     else:
         p[1].value.append(p[3])
         p[0] = p[1]
@@ -178,7 +178,8 @@ def p_music(p):
     if len(p) == 8:
         p[0] = ASTNode(ASTNodeType.MUSIC, children=[], value=(p[3], p[6]))
     if len(p) == 7:
-        p[0] = ASTNode(ASTNodeType.MUSIC, children=[], value=([], p[5]))
+        p[0] = ASTNode(ASTNodeType.MUSIC, children=[], value=(ASTNode(ASTNodeType.NOTE_LIST, children=[],
+                                                                      value=[], value_type=ValueType.NOTE_LIST), p[5]))
 
 
 # Commands

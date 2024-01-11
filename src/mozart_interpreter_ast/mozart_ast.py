@@ -8,6 +8,13 @@ class ValueType(Enum):
     IDENTIFIER = 1
     REAL = 2
     INTEGER = 3
+    CHORD = 4
+    CHORD_LIST = 5
+    HARMONIC_FIELD = 6
+    NOTE = 7
+    NOTE_LIST = 8
+    SCALE = 9
+    INTEGER_LIST = 10
 
 
 class ASTNodeType(Enum):
@@ -38,6 +45,7 @@ class ASTNodeType(Enum):
     BUILTIN_FUNCTIONS = 24
     PARAMS_LIST = 25
     ARITHMETIC_LITERAL = 26
+    INTEGER_LIST = 27
 
 
 @dataclass

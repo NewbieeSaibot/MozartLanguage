@@ -1,4 +1,5 @@
 from ply import *
+from mozart_ast import ValueType
 
 literals = ["=", "(", ")", "[", "]", "{", "}"]
 
@@ -72,15 +73,15 @@ def t_WHILE(t):
 def t_BOOLEAN(t):
     r'(True|False)'
     if str(t.value) == "True":
-        t.value = ('boolean', True)
+        t.value = (ValueType.BOOLEAN, True)
     else:
-        t.value = ('boolean', False)
+        t.value = (ValueType.BOOLEAN, False)
     return t
 
 
 def t_REAL(t):
     '-?[1-9][0-9]*.[0-9]+'
-    t.value = ("real", float(t.value))
+    t.value = (ValueType.REAL, float(t.value))
     return t
 
 
@@ -102,9 +103,9 @@ def t_INTEGER(t):
             pitch_value += 1
 
         pitch_value += int(str(t.value)[-1]) * 12
-        t.value = ("integer", pitch_value)
+        t.value = (ValueType.INTEGER, pitch_value)
     else:
-        t.value = ("integer", int(t.value))
+        t.value = (ValueType.INTEGER, int(t.value))
     return t
 
 
