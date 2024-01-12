@@ -137,7 +137,6 @@ class MozartInterpreter:
     def __interpret_ast(self, ast):
         program_state = {}
         program_state = self.__evaluate_command(ast.root, program_state)
-        print("program_state", program_state)
 
     def __evaluate_command(self, node: ASTNode, program_state):
         if len(node.children) == 2:
@@ -332,11 +331,3 @@ class MozartInterpreter:
                 operator = self.__evaluate_binary_logic_operator(node.children[1], program_state)
                 value_type_b, value_b = self.__evaluate_logic_expression(node.children[2], program_state)
                 return value_type_a, self.logic_operations[operator](value_a, value_b)
-
-
-path = "../../data/mozart_code_examples/example_1.mozart"
-with open(path, "r", encoding="utf-8") as fp:
-    code = fp.read()
-
-interpreter = MozartInterpreter()
-interpreter.run(code)
