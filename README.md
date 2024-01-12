@@ -8,4 +8,4 @@
   <li>If you want to run the tests just execute the mozart test runner file. The default directory for tests is currently "/data/mozart_test_files/command_interpretation".</li>
 </ol>
 <h2> How To Code In Mozart</h2>
-<p>There is a document describing the language. The document contains the lexer, parser, ast, semantic analysis and interpreter. The document with detailed descriptions will be published asap.</p>
+<p>There is a document describing the language. The document contains the lexer, parser, ast, semantic analysis and interpreter details. The document with detailed descriptions will be published asap.</p>
