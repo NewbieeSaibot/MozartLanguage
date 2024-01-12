@@ -11,3 +11,10 @@
 </ol>
 <h2> How To Code In Mozart</h2>
 <p>There is a document describing the language. The document contains the lexer, parser, ast, semantic analysis and interpreter details. The document with detailed descriptions will be published asap.</p>
+
+<h2>To Do</h2>
+
+<ul>Add more test cases.</ul>
+<ul>Finish the implementation of all built-in functions.</ul>
+<ul>Publish the document with the language description.</ul>
+<ul>Make the programming language accept user defined functions.</ul>
