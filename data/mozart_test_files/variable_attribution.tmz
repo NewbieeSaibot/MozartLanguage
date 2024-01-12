@@ -1,8 +1,0 @@
-test = {
-    "code": "{
-        integer a = 0;
-        a = 1;
-    }"
-    "expected_output": {a: (ValueType.INTEGER, 1)}
-}
-

@@ -70,7 +70,7 @@ class MozartInterpreter:
         # Syntax Analysis and Build AST
         ast = mozart_parser.parse(code)
         # Semantic Analysis and Interpretation
-        self.__interpret_ast(ast)
+        return self.__interpret_ast(ast)
 
     @staticmethod
     def mozart_not(value: bool):
@@ -136,7 +136,7 @@ class MozartInterpreter:
 
     def __interpret_ast(self, ast):
         program_state = {}
-        program_state = self.__evaluate_command(ast.root, program_state)
+        return self.__evaluate_command(ast.root, program_state)
 
     def __evaluate_command(self, node: ASTNode, program_state):
         if len(node.children) == 2:
