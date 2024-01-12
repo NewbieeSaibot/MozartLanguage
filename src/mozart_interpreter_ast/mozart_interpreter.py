@@ -1,42 +1,7 @@
 import mozart_parser
 import mozart_builtin_functions
 from mozart_ast import ASTNode, ASTNodeType, ValueType
-
-
-class NotExistentVariableAttribution(Exception):
-    def __init__(self, identifier: str):
-        super().__init__(f"Semantic Error: Attribution of not existent variable '{identifier}'")
-
-
-class WrongDomainVariableAttribution(Exception):
-    def __init__(self, new_value_domain, real_domain):
-        super().__init__(f"Semantic Error: new value domain is '{new_value_domain}',"
-                         f" and the defined domain is '{real_domain}'")
-
-
-class IdentifierAlreadyDefined(Exception):
-    def __init__(self, identifier):
-        super().__init__(
-            f"Semantic Error: There is a variable already defined with the same identifier: '{identifier}'"
-        )
-
-
-class OperationBetweenDifferentDomain(Exception):
-    def __init__(self, value_type_a, value_type_b):
-        super().__init__(f"Wrong domain operation: '{value_type_a}', '{value_type_b}'")
-
-
-class WrongDomainOperation(Exception):
-    def __init__(self, value_type, defined_operation_domains):
-        domains = ""
-        for domain in defined_operation_domains:
-            domains += domain + " "
-        super().__init__(f"Wrong domain operation: '{value_type}', '{domains}'")
-
-
-class ModuloZero(Exception):
-    def __init__(self):
-        pass
+from mozart_exceptions import *
 
 
 class MozartInterpreter:
@@ -171,12 +136,10 @@ class MozartInterpreter:
 
     def __interpret_ast(self, ast):
         program_state = {}
-        print("command", ast.root)
         program_state = self.__evaluate_command(ast.root, program_state)
-        print(program_state)
+        print("program_state", program_state)
 
     def __evaluate_command(self, node: ASTNode, program_state):
-        print("command", node)
         if len(node.children) == 2:
             program_state = self.__evaluate_command(node.children[0], program_state)
             program_state = self.__evaluate_command(node.children[1], program_state)
@@ -193,7 +156,6 @@ class MozartInterpreter:
 
     def __evaluate_loop(self, node: ASTNode, program_state):
         # First child is the logic expression and the second is the command
-        print("loop", node)
         while self.__evaluate_logic_expression(node.children[0], program_state)[1]:
             program_state = self.__evaluate_command(node.children[1], program_state)
 
@@ -201,7 +163,6 @@ class MozartInterpreter:
 
     def __evaluate_register(self, node: ASTNode, program_state):
         # first child is a expression
-        print("register", node)
         value_type, music = self.__evaluate_expression(node.children[0], program_state)
         fp = open("./generated_music.mus", "w", encoding="utf-8")
         fp.write(str(music))
@@ -210,7 +171,6 @@ class MozartInterpreter:
 
     def __evaluate_variable_attribution(self, node: ASTNode, program_state):
         # first child is an expression, first value is the variable identifier
-        print("variable_attribution", node)
         value_type, value = self.__evaluate_expression(node.children[0], program_state)
         if node.value in program_state:
             if value_type == program_state[node.value][0]:
@@ -225,9 +185,7 @@ class MozartInterpreter:
         # first child is an expression
         # first value is the variable type
         # second value is the variable identifier
-        print("variable declaration", node)
         value = self.__evaluate_expression(node.children[0], program_state)
-        print("value", value)
         if not (node.value[1] in program_state):
             if value[0] == node.value[0]:
                 program_state[node.value[1]] = (value[0], value[1])
@@ -238,7 +196,6 @@ class MozartInterpreter:
         return program_state
 
     def __evaluate_arithmetic_expression(self, node: ASTNode, program_state):
-        print("arithmetic_expression", node)
         defined_operation_domains = [ValueType.INTEGER, ValueType.REAL]
         if len(node.children) == 0:
             return program_state[node.value]
@@ -267,7 +224,6 @@ class MozartInterpreter:
 
     @staticmethod
     def __evaluate_arithmetic_literal(node: ASTNode, program_state):
-        print("arithmetic literal", node)
         return node.value_type, node.value
 
     @staticmethod
@@ -281,7 +237,8 @@ class MozartInterpreter:
     def __evaluate_builtin_functions(self, node: ASTNode, program_state):
         # First child is the params list and the value is the predefined_identifier
         params = self.__evaluate_params_list(node.children[0], program_state)
-        return self.mozart_builtin_functions_mapper[node.value](program_state, params)
+        value = self.mozart_builtin_functions_mapper[node.value](params, program_state)
+        return value
 
     @staticmethod
     def __evaluate_chord(node: ASTNode, program_state):
@@ -298,9 +255,7 @@ class MozartInterpreter:
         return node.value
 
     def __evaluate_expression(self, node: ASTNode, program_state):
-        print("expression", node)
-        er = self.evaluation_mapper[node.children[0].type.name](node.children[0], program_state)
-        return er
+        return self.evaluation_mapper[node.children[0].type.name](node.children[0], program_state)
 
     def __evaluate_harmonic_field(self, node: ASTNode, program_state):
         chord_list = self.__evaluate_chord_list(node.children[0], program_state)
@@ -342,7 +297,6 @@ class MozartInterpreter:
         return ValueType.INTEGER_LIST, node.value
 
     def __evaluate_music(self, node: ASTNode, program_state):
-        print("music", node)
         note_list = self.__evaluate_note_list(node.value[0], program_state)
         return ValueType.MUSIC, (note_list, node.value[1])
 
@@ -353,8 +307,6 @@ class MozartInterpreter:
         return params_list
 
     def __evaluate_logic_expression(self, node: ASTNode, program_state):
-        print("logic_expression", node)
-        print("program state inside l e", program_state)
         if len(node.children) == 0:
             if node.value_type == ValueType.BOOLEAN:
                 return ValueType.BOOLEAN, node.value
