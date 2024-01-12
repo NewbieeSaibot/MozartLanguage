@@ -1,4 +1,6 @@
 <h1> <strong>MOZART</strong>: A Toy Programming Language Designed for Music Programming</h1>
+<img src="https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839PA4459PT28D118739808W7911H10000/views/1,width=550,height=550,appearanceId=839,backgroundColor=F2F2F2/wolfgang-amadeus-mozart-sticker.jpg", alt="Mozart", width=200, height=200>
+
 <h2> How To Use The Interpreter</h2>
 <ol>
   <li>Install a compatible version of Python. Recommended a version greater than 3.8.</li>
