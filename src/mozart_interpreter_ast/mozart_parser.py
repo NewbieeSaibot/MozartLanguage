@@ -226,20 +226,6 @@ def p_expression(p):
     p[0] = ASTNode(ASTNodeType.EXPRESSION, children=[p[1]])
 
 
-def aux_get(p):
-    get_types = ["chord", "scale", "harmonic_field"]
-    if len(p[3]) == 2:
-        if p[3][0][0] in get_types:
-            if p[3][1][0] == 'integer':
-                p[0] = p[3][0][1][p[3][1][1]]
-            else:
-                p[0] = f"[ERROR] Position must be an integer! Got {p[3][1][0]}"
-        else:
-            p[0] = f"[ERROR] Expected one of the following types: {get_types}. Got {p[3][0][0]}"
-    else:
-        p[0] = f"[ERROR] Wrong number of params. Expected 2, got {len(p[3])}"
-
-
 def p_builtin_functions(p):
     r'builtin_functions : PREDEFINED_IDENTIFIER "(" params_list ")"'
     p[0] = ASTNode(ASTNodeType.BUILTIN_FUNCTIONS, children=[p[3]], value=p[1])
