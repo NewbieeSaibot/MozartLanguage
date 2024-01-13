@@ -60,3 +60,13 @@ class ASTNode:
 class AST:
     def __init__(self, root: ASTNode):
         self.root = root
+
+    @staticmethod
+    def print_tree(node: ASTNode, indentation: int = 0):
+        space = "-" * indentation
+        if node.value is None:
+            print(space, node.type)
+        else:
+            print(space, node.type, node.value)
+        for child in node.children:
+            AST.print_tree(child, indentation + 2)

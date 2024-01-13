@@ -1,0 +1,5 @@
+{
+    integer a = 0;
+    real b = -1.0;
+    note nota = (1.0, 1.0, 2);
+}

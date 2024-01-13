@@ -1,0 +1,5 @@
+{
+    'a': (ValueType.INTEGER, 0),
+    'b': (ValueType.REAL, -1.0),
+    'nota': (ValueType.NOTE, (1.0, 1.0, 2))
+}

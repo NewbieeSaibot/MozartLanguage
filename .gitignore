@@ -2,4 +2,4 @@
 *__pycache__
 *.mus
 *.out
-src/mozart_interpreter_ast/parsetab.py
+*/parsetab.py

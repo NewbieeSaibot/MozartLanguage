@@ -1,1 +1,4 @@
-{'a': (ValueType.INTEGER, 1)}
+{
+    'a': (ValueType.INTEGER, 1),
+    'b': (ValueType.REAL, 1.0),
+}

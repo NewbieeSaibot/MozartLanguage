@@ -1,6 +1,6 @@
 import mozart_parser
 import mozart_builtin_functions
-from mozart_ast import ASTNode, ASTNodeType, ValueType
+from mozart_ast import AST, ASTNode, ASTNodeType, ValueType
 from mozart_exceptions import *
 
 
@@ -69,6 +69,7 @@ class MozartInterpreter:
     def run(self, code: str):
         # Syntax Analysis and Build AST
         ast = mozart_parser.parse(code)
+        # AST.print_tree(ast.root, 0)
         # Semantic Analysis and Interpretation
         return self.__interpret_ast(ast)
 

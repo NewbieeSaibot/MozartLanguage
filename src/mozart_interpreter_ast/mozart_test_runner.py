@@ -23,7 +23,8 @@ class MozartTestRunner:
                     expected_final_state = eval(expected_final_state_txt)
 
                 final_state = interpreter.run(code)
-
+                print(final_state)
+                print(expected_final_state)
                 assert final_state == expected_final_state
 
 
